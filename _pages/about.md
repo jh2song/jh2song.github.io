@@ -7,8 +7,9 @@ toc_sticky: true
 ---
 ## 학력
 
-### 동의대학교 컴퓨터공학과 학사
+### 동의대학교 컴퓨터공학과
 * 2018.03 ~
+* 학사
 
 ## 대회 참가 및 수상
 
@@ -24,11 +25,12 @@ toc_sticky: true
   * Team Name: HACKjeongdap
   * [scoreboard](http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/){: target="_blank"}
 
-### 대학교 학과 성적 우등상
+### 학과 성적 우등상
   * 2018.07
   * 수석
   
 ## 대외활동
 
-### 동의대 알고리즘 동아리(회장)
+### 동의대 알고리즘 동아리
  * 2020.12 ~
+ * 회장
