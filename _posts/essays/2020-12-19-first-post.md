@@ -1,9 +1,9 @@
 ---
-title: 첫 블로그 포스팅. 그리고 다짐.
-excerpt: 블로그 청사진 등 기술
-tags: [essay]
-categories: [essay]
-last_modified_at: 2020-12-19
+title: "첫 블로그 포스팅. 그리고 다짐."
+excerpt: "블로그 청사진 등 기술"
+tags: ["essay"]
+categories: ["essay"]
+last_modified_at: "2020-12-19"
 toc: true
 toc_sticky: true
 ---
@@ -13,7 +13,7 @@ toc_sticky: true
 
 내 마음대로 커스터마이징하고 싶었는데... 여기서 웹 공부에 부족함을 느꼈다.
 
-예로, 포스트 처음에 있는 _최대 x 분 소요(readTime)_ 를 _글을 업데이트한 날짜_ 로 변경하고 싶었다. 열심히 구글링해 봤지만, 예전 버전에 대한 설명뿐이었다.
+예로, 포스트 처음에 있는 _최대 x 분 소요(readTime)_ 를 _글을 업데이트한 날짜_ 로 변경하고 싶었다. 열심히 구글링해 봤지만, minimal-mistakes 예전 버전에 대한 설명뿐이었다.
 
 뭐, 나름 쓸만한 기능이라 넘어갈 생각이다.
 
@@ -47,8 +47,8 @@ toc_sticky: true
 그 외 다른 강의의 강의 노트와 PS 포스팅이 주가 될 것 같다.
 
 # 마치며
-코드블록 테스팅을 하며 포스팅을 마무리하겠다.
-```
+코드 블록 테스팅을 하며 포스팅을 마무리하겠다.
+```c++
 #include <iostream>
 using namespace std;
 
