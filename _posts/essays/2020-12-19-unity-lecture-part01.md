@@ -20,14 +20,23 @@ toc_sticky: true
 * Visual Assist라는 어썸한 플러그인이 있으나 돈을 내야함 ㅡㅡ. 코드가 예쁘게 보인다.
 &nbsp;
 
-
+&nbsp;
 # 데이터 갖고 놀기
 ## 정수 형식
+* 주석, 정수 설명
+* 헷갈릴 수 있는거 정리
+
+|<center>bytes</center>|<center>C++</center>|<center>C#</center>|
+|---|---|---|
+|<center>4 bytes</center>|<center>long</center>|<center>int</center>|
+|<center>8 bytes</center>|<center>long long</center>|<center>long</center>|
 
 &nbsp;
+
 ## 2진수, 10진수, 16진수
-
+* 진법 설명
 &nbsp;
-## 정수 범위의 비밀
 
+## 정수 범위의 비밀
+* 2의 보수 설명
 &nbsp;
