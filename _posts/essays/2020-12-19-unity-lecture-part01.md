@@ -24,7 +24,6 @@ toc_sticky: true
 # 데이터 갖고 놀기
 ## 정수 형식
 * 주석, 정수 설명
-* 헷갈릴 수 있는거 정리
 
 |<center>bytes</center>|<center>C++</center>|<center>C#</center>|
 |---|---|---|
@@ -60,5 +59,63 @@ float f = 3.14f;
 &nbsp;
 
 ## 비트 연산
+* 최상위 비트에 1이 있는데 오른쪽 시프트 연산을 하면 최상위 비트 1은 유지된채로 시프트한다.
+* 고로 이런 케이스에선 헷갈리지 않게 쓰기 위해 uint를 쓰는게 좋을 듯.
+&nbsp;
+
+## 데이터 마무리
+* C#에는 타입을 정하지 않고 편하게(?) 사용하는 var 자료형이 있다. 그러나 C#, C++의 장점은 타입을 명시해서 코드를 보는 사람이 명확히 이해할 수 있는 것이다. 그러므로 비추!
+&nbsp;
+
+# 코드의 흐름 제어
+## if와 else
+* if/else 설명
+&nbsp;
+
+## switch
+* switch, 삼항 연산자 설명
+&nbsp;
+
+## 가위-바위-보 게임
+```c#
+Random rand = new Random();
+int aiChoice = rand.Next(0,3);
+int choice = Convert.ToInt32(Console.ReadLine());
+```
+
+## 상수와 열거형
+```c#
+int ROCK = 1;
+const int PAPER = 2;
+switch (choice)
+{
+    case ROCK: // ERROR!!!
+        ~~~~~~ 
+    case PAPER: // OK!!! Because "const"
+        ~~~~~~
+}
+```
+```c#
+enum Choice // 열거형
+{
+    Rock = 1, // 기본은 0부터 시퀀스
+    Paper = 2,
+    Scissors = 0
+}
+
+static void Main(...)
+{
+    switch (choice)
+    {
+        // 타입이 enum이므로 int로 형변환
+        case (int)Choice.Scissors:
+            Console.WriteLine("가위");
+            break;
+        ....
+    }
+}
+```
+
+## while
 
 &nbsp;
