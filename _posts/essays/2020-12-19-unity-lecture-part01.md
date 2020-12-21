@@ -1,6 +1,6 @@
 ---
 title: "[C#과 유니티로 만드는 MMORPG 게임 개발 시리즈] Part1: C# 기초 프로그래밍 입문 강의 노트"
-excerpt: 강의 노트
+excerpt: "20/12/19 - 강의 노트"
 tags: ["unity", "c#"]
 categories: ["unity"]
 last_modified_at: "2020-12-19"

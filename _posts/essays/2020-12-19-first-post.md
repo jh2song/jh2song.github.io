@@ -1,6 +1,6 @@
 ---
 title: "첫 블로그 포스팅. 그리고 다짐."
-excerpt: "블로그 청사진 등 기술"
+excerpt: "20/12/19 - 블로그 청사진 등 기술"
 tags: ["essay"]
 categories: ["essay"]
 last_modified_at: "2020-12-19"
