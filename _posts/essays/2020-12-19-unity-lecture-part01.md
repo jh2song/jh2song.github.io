@@ -30,8 +30,6 @@ toc_sticky: true
 |<center>4 bytes</center>|<center>long</center>|<center>int</center>|
 |<center>8 bytes</center>|<center>long long</center>|<center>long</center>|
 
-&nbsp;
-
 ## 2진수, 10진수, 16진수
 * 진법 설명
 &nbsp;
