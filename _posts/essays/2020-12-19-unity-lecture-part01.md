@@ -118,4 +118,106 @@ static void Main(...)
 
 ## while
 
+```c#
+do
+{
+    bool a = true; 
+} while (a) // ERROR!!! 변수 a는 do 안에 {} 사이에서만 유효하므로!!
+```
+
+## for
+* for문 설명
 &nbsp;
+
+## break, continue
+* break, continue 설명
+&nbsp;
+
+## 함수
+
+```c#
+class Program
+{
+    // 복사 덧셈 함수
+    static void CopyAddOne(int number)
+    {
+        number = number + 1;
+    }
+
+    // 참조 덧셈 함수
+    static void RefAddOne(ref int number)
+    {
+        number = number + 1;
+    }
+
+    static void Main(String[] args)
+    {
+        // 복사(짭퉁), 참조(진퉁)
+        int a = 0;
+        
+        Program.CopyAddOne(a);
+        Console.WriteLine(a); // 출력: 0 (덧셈 안됨)
+
+        Program.RefAddOne(ref a);
+        Console.WriteLine(a); // 출력: 1 (덧셈 완료)
+    }
+}
+```
+
+## ref, out
+
+```c#
+// ref 예제
+static void Swap(ref int a, ref int b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+```
+
+```c#
+// out 예제
+static void Divide(int a, int b, out int result1, out int result2)
+{
+    result1 = a / b;
+    result2 = a % b;
+}
+
+static void Main(string[] args)
+{
+    int num1 = 10;
+    int num2 = 3;
+
+    int result1;
+    int result2;
+    Divide(10, 3, out result1, out result2);
+
+    Console.WriteLine(result1); // 3
+    Console.WriteLine(result2); // 1
+}
+```
+
+## 오버로딩
+
+```c#
+static int Add(int a, int b, int c = 0, float d = 1.0f, double e = 3.0)
+{
+    Console.WriteLine("Add int 호출");
+    return a + b + c;
+}
+
+static void Main(string[] args)
+{
+    Program.Add(1, 2, d:2.0f) // C++는 매개변수 순서를 지켜줘야 되지만 C#은 그렇지 않아도 된다!
+}
+```
+
+## 연습 문제
+* 구구단 출력, 피라미드 별찍기, 팩토리얼
+&nbsp;
+
+# TextRPG
+## 디버깅 기초
+
+
