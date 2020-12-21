@@ -217,6 +217,7 @@ static void Main(string[] args)
 * 구구단 출력, 피라미드 별찍기, 팩토리얼
 &nbsp;
 
+&nbsp;
 # TextRPG
 ## 디버깅 기초
 
