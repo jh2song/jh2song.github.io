@@ -226,3 +226,61 @@ static void Main(string[] args)
 &nbsp;
 
 ## TextRPG 직업 고르기
+* enum 개념을 구글링으로 확실히 다지기!!!
+&nbsp;
+
+## TextRPG 플레이어 생성
+```c#
+// 주목: enum과 struct
+
+enum ClassType
+{
+    None = 0,
+    Knight = 1,
+    Archer = 2,
+    Mage = 3
+}
+
+struct Player
+{
+    public int hp;
+    public int attack;
+}
+
+static void CreatePlayer(ClassType choice, out Player player) // 매개변수 주의! "out Player player"
+{
+    // 기사, 궁수, 법사에 맞게 hp, attack 조정
+    switch (choice)
+    {
+        case ClassType.Knight:
+            player.hp = 100;
+            player.attack = 10;
+            break;
+        ...
+    }
+}
+
+static void Main(string[] args)
+{
+    while(true)
+    {
+        ClassType choice = ChooseClass();
+        if (choice != ClassType.None) 
+        {
+            Player player;
+            CreatePlayer(choice, out Player)
+        }
+    }
+}
+```
+
+## TextRPG 몬스터 생성
+* 몬스터 관련 코딩
+&nbsp;
+
+## TextRPG 전투
+* 전투 관련 코딩
+&nbsp;
+
+&nbsp;
+# 객체지향 여행
