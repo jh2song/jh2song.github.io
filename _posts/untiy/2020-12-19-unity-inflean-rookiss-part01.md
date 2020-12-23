@@ -219,5 +219,10 @@ static void Main(string[] args)
 &nbsp;
 # TextRPG
 ## 디버깅 기초
+* breakpoint 조건식 검사 ('브레이크 포인트 우클릭' - '조건')
+![image](https://user-images.githubusercontent.com/43688074/102947362-821d2300-4506-11eb-93df-5aafbdef6512.png)
+* 다음에 실행될 문 변경 (화살표를 위 아래로 드래그해서 사용)
+![image](https://user-images.githubusercontent.com/43688074/102947845-a62d3400-4507-11eb-8773-1e461cfc3e2d.png)
+&nbsp;
 
-
+## TextRPG 직업 고르기
