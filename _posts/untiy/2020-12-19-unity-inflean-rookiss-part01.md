@@ -3,7 +3,7 @@ title: "[C#과 유니티로 만드는 MMORPG 게임 개발 시리즈] Part1: C# 
 excerpt: "20/12/19 - 강의 노트"
 tags: ["unity", "c#"]
 categories: ["unity"]
-last_modified_at: "2020-12-19"
+last_modified_at: "2020-12-24"
 toc: true
 toc_sticky: true
 ---
@@ -284,3 +284,142 @@ static void Main(string[] args)
 
 &nbsp;
 # 객체지향 여행
+## 객체지향의 시작
+* 널 크래쉬
+널인 객체의 속성 등을 호출할때 발생
+&nbsp;
+
+## 복사(값)와 참조
+* "struct는 복사 / class는 참조"를 해서 작업
+```c#
+class Knight
+{
+    public int hp;
+    public int attack;
+
+    public void Move() {...}
+    
+    public void Attack() {...}
+}
+
+struct Mage
+{
+    public int hp;
+    public int attack;
+}
+
+class Program
+{
+    static void KillMage(Mage mage)
+    {
+        mage.hp = 0;
+    }
+
+    static void KillKnight(Knight knight)
+    {
+        knight.hp = 0;
+    }
+
+    static void Main(...)
+    {
+        Mage mage;
+        mage.hp = 100;
+        mage.attack = 50;
+        KillMage(mage); // 복사이므로 이 함수를 실행해도 hp가 0으로 되지 않음
+
+        Knight knight = new Knight();
+        knight.hp = 100;
+        knight.attack = 10;
+        KillKnight(knight); // 참조이므로 hp가 0으로 변함
+    }
+}
+```
+
+* [깊은 복사(Deep Copy) VS 얕은 복사(Shallow Copy)](https://m.blog.naver.com/adonise007/220578209008)
+
+```c#
+class Person
+{
+        public string name;
+        public int age;
+        public Car car;              
+
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
+
+        public int Age
+        {
+            get { return this.age; }
+            set { this.age = value; }
+        }
+
+        public Car Car
+        {
+            get { return this.car; }
+            set { this.car = value; }
+        }
+
+        public object ShallowCopy()
+        {
+            // MemberwiseClone: 새 개체를 만든 다음 현재 개체의 비정적 필드를 새 개체에 복사하여 단순 복사본을 만듬.         
+            return this.MemberwiseClone();
+        }
+
+        public Object Clone()
+        {
+            Person person = new Person();
+            person.name = this.name;
+            person.age = this.age;
+            person.car = new Car();
+            person.car.model = this.car.model;
+        }
+}
+
+class Car 
+{             
+        public string model;                 
+        public string Model
+        {
+            get { return this.model; }
+            set { this.model = value; }
+        }
+}
+
+static void Main(string[] args)
+{
+    // 원본 객체(person)
+    Person person = new Person();
+    person.Name = "홍길동";
+    person.Age = 33;
+    person.Car = new Car();
+    person.Car.Model = "뉴카이런";
+
+    // 얕은 복사된 객체(객체)
+    Person person2 = (Person) person.ShallowCopy();
+    person2.Name = "진시황";
+    person2.Age = 55;
+    person2.Car.Model = "뉴산타페":
+
+    // 두 객체 비교 - 두 객체간 동일한 Car 참조를 가지고 있다.
+    // WriteLine: 파라미터의 속성들을 모두 출력
+    // person과 person2가 동일한 뉴산타페를 가지고 있음 (그 외는 다름)
+    WriteLine(person);
+    WriteLine(person2);
+
+    // 깊은 복사된 객체
+    Person person3 = (Person)person.Clone();
+    person3.Name = "진시황";
+    person3.Age = 55;
+    person3.Car.Model = "뉴산타페";
+
+    // 두 객체 비교 - 두 객체간 서로 다른 Car 참조를 가지고 있다.
+    WriteLine(person);
+    WriteLine(person3);
+
+}
+```
+
+## 스택과 힙
