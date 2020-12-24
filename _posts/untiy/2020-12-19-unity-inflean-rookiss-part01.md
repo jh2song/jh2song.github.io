@@ -291,6 +291,7 @@ static void Main(string[] args)
 
 ## 복사(값)와 참조
 * "struct는 복사 / class는 참조"를 해서 작업
+
 ```c#
 class Knight
 {
@@ -423,3 +424,38 @@ static void Main(string[] args)
 ```
 
 ## 스택과 힙
+* 스택
+> 불안정하고 임시적으로 사용하는 메모리
+> 함수안에 변수 저장공간은 다 스택 영역에 저장된다.
+> 스택에 참조 변수(주소값) -> 가리키는 본체는 힙 영역
+* 힙
+> 참조 타입의 본체가 있는 곳
+> 동적으로 할당
+
+* 스택 영역은 함수가 호출되고 종료되는 순간에 알아서 스케일 업/다운 하기 때문에 신경을 쓸 필요가 없다. 그러나 힙 영역은 메모리를 할당했으면 계속 메모리에 남게 된다.
+* C#은 C++과는 달리 힙 영역을 프로그래머가 delete할 필요 없이 알아서 날려준다.
+* 본체가 힙에만 있진 않는다. (Main 함수 변수(스택)를 ref로 선언)
+&nbsp;
+
+## 생성자
+
+```c#
+public Knight()
+{
+    hp = 100;
+    attack = 10;
+    Console.WriteLine("생성자 호출!");
+}
+
+public Knight(int hp) : this()
+{
+    this.hp = hp;
+    Console.WriteLine("int 생성자 호출!");
+}
+
+// 출력
+// 생성자 호출!
+// int 생성자 호출!
+```
+
+## static의 정체
