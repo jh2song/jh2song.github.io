@@ -426,10 +426,13 @@ static void Main(string[] args)
 ## 스택과 힙
 * 스택
 > 불안정하고 임시적으로 사용하는 메모리
+&nbsp;
 > 함수안에 변수 저장공간은 다 스택 영역에 저장된다.
+&nbsp;
 > 스택에 참조 변수(주소값) -> 가리키는 본체는 힙 영역
 * 힙
 > 참조 타입의 본체가 있는 곳
+&nbsp;
 > 동적으로 할당
 
 * 스택 영역은 함수가 호출되고 종료되는 순간에 알아서 스케일 업/다운 하기 때문에 신경을 쓸 필요가 없다. 그러나 힙 영역은 메모리를 할당했으면 계속 메모리에 남게 된다.
@@ -459,3 +462,31 @@ public Knight(int hp) : this()
 ```
 
 ## static의 정체
+* static 함수에서는 비 static 필드에 접근을 못할까?
+> 비 static 필드의 값은 각 객체마다 다를 수 있는데 공용 static 함수에서 사용할 수 없기 때문!
+
+```c#
+Console.WriteLine() // WriteLine: Console 클래스의 static 함수
+
+Random rand = new Random();
+rand.Next(0, 2); // Next: 비 static 함수
+```
+
+## 상속성
+* 상속된 클래스의 인스턴스 생성시 부모 클래스의 생성자를 먼저 호출하고 자식 클래스의 생성자를 호출한다!!
+
+```c#
+class Knight : Player
+{
+    public Knight() : base(100) // 부모 클래스의 생성자 선택
+    {
+        base.hp = 100; // 부모 클래스의 필드 사용
+    }
+}
+```
+
+* 부모 클래스의 함수도 자식 클래스의 인스턴스가 호출할 수 있다.
+&nbsp;
+
+## 은닉성
+
