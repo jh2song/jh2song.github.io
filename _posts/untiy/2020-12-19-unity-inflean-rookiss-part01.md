@@ -805,3 +805,86 @@ a[0][0] = 1;
 ```
 
 ## List
+* insert
+> O(N)
+* Add
+> * Count가 Capacity보다 작으면 O(1)
+> * 새로운 요소를 수용하기 위해 용량을 늘려야하는 경우 O(N) 여기서 N은 Count
+* Remove
+> O(N) (왜냐면 남은 요소를 shift 해야 하므로)
+
+&nbsp;
+
+```c#
+List<int> list = new List<int>();
+
+// [ 0, 1, 2, 3, 4]
+for (int i = 0; i < 5; i++)
+    list.Add(i);
+
+// 삽입 삭제
+// [ 0, 1, 999, 2, 3, 4]
+list.Insert(2, 999);
+// 3이 여러개 있다면 처음 만난 3만 삭제
+bool success = list.Remove(3);
+
+list.RemoveAt(0);
+
+list.Clear();
+
+for (int i = 0; i< list.Count; i++)
+    Console.WriteLine(list[i]);
+
+foreach (int num in list)
+    Console.WriteLine(num);
+```
+
+## Dictionary
+* Hashtable로 구현돼있다.
+> * 공이 들어있는 아주 큰 박스 [ ... ] 1만개 (1~1만)
+> * 박스 여러개로 쪼개놓는다. [1~10] [11~20] [] [] [] [] [] [] 1천개
+> * 7777번 공은 어디에 있나? -> 777번째 박스에서 찾으면 된다!
+> * 메모리 손해
+> * 즉, 메모리를 내주고, 성능을 취한다!
+
+&nbsp;
+
+```c#
+class Monster
+{
+    public int id;
+
+    public Monster(int id) { this.id = id; }
+}
+
+static void Main(string[] args)
+{
+    // Key -> Value
+    Dictionary<int, Monster> dic = new Dictionary<int, Monster>();
+
+    /* 삽입
+    dic.Add(1, new Monster(1));
+    dic[5] = new Monster(5);
+    */
+
+    for (int i = 0; i < 10000; i++)
+    {
+        dic.Add(i, new Monster(i));
+    }
+
+    /* 위험한 코드! 해당 key에 value가 없다면? -> 크래쉬
+    Monster mon = dic[5000];
+    */
+
+    Monster mon;
+    bool found = dic.TryGetValue(20000, out mon); // found: false, mon: null
+
+    dic.Remove(7777);
+    dic.Clear();
+}
+```
+
+&nbsp;
+
+# 알아두면 유용한 기타 문법
+## Generic (일반화)
