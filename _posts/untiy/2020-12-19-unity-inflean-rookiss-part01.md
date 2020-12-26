@@ -3,7 +3,7 @@ title: "[C#과 유니티로 만드는 MMORPG 게임 개발 시리즈] Part1: C# 
 excerpt: "20/12/19 - 강의 노트"
 tags: ["unity", "c#"]
 categories: ["unity"]
-last_modified_at: "2020-12-24"
+last_modified_at: "2020-12-26"
 toc: true
 toc_sticky: true
 ---
@@ -702,3 +702,106 @@ string substringName = name.SubString(6); // Potter Junior
 * 구현 내용
 &nbsp;
 
+## TextRPG2 게임 진행
+* 구현 내용
+&nbsp;
+
+## TextRPG2 마무리
+* 구현 내용
+&nbsp;
+
+&nbsp;
+# 자료구조 맛보기
+## 배열
+
+```c#
+// foreach
+int[] scores = new int[5];
+foreach(int score in scores)
+{
+    Console.WriteLine(score);
+}
+```
+
+```c#
+// 배열 초기화 3가지 방법
+int[] scores = new int[5] { 10, 20, 30, 40, 50 }; // 5개를 빼먹으면 에러가 뜬다!
+int[] scores = new int[] { 10, 20, 30, 40, 50 };
+int[] scores = { 10, 20, 30, 40, 50 };
+```
+
+## 연습 문제
+* 디버깅시 무한 루프로 프로그램이 끝나지 않을 때 멈춰서 해당 지점을 알 수 있는 팁
+![image](https://user-images.githubusercontent.com/43688074/103147537-9a58a080-4799-11eb-9f60-d0859c182039.png)
+
+* 면접 할때 Sort 알고리즘 4개 정돈 물어본다.
+&nbsp;
+
+## 다차원 배열
+
+```c#
+int[,] arr = new int[2, 3];
+```
+
+```c#
+// 2차원 배열 초기화 3가지 방법
+int[,] arr = new int[2, 3] { {1,2,3}, {1,2,3} };
+int[,] arr = new int[,] { {1,2,3}, {1,2,3} };
+int[,] arr = { {1,2,3}, {1,2,3} };
+```
+
+```c#
+class Map
+{
+    int[,] tiles = {
+        {1,1,1,1,1},
+        {1,0,0,0,1},
+        {1,0,0,0,1},
+        {1,0,0,0,1},
+        {1,1,1,1,1}
+    };
+
+    public void Render()
+    {
+        var defaultColor = Console.ForegroundColor;
+
+        for (int y = 0; y < tiles.GetLength(1); y++)
+        {
+            for (int x = 0; x < tiles.GetLength(0); x++)
+            {
+                if (tiles[y,x] == 1)
+                    Console.ForegroundColor = ConsoleColor.Red;
+                else
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                Console.Write('■');
+            }
+            Console.WriteLine();
+        }
+
+        Console.ForegroundColor = defaultColor;
+    }
+}
+
+static void Main(string[] args)
+{
+    Map map = new Map();
+    map.Render();
+}
+```
+
+```c#
+// 가변 배열
+
+// [ . . ]
+// [ . . . . . .]
+// [ . . . ]
+int[][] a = new int[3][];
+a[0] = new int[3];
+a[1] = new int[6];
+a[2] = new int[2];
+
+a[0][0] = 1;
+```
+
+## List
