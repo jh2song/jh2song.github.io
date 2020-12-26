@@ -489,7 +489,216 @@ class Knight : Player
 
 ## 은닉성
 * 필드를 public으로 접근 제어 하지 않고 private으로 선언 후 setter/getter로 제어하는 장점은?
-> 그냥 public으로 접근 제어시 프로그램이 비대해지면 누가 필드를 변경했는지 알기 어렵다.
+> * 그냥 public으로 접근 제어시 프로그램이 비대해지면 누가 필드를 변경했는지 알기 어렵다.
+> * set 메서드에 브레이크 포인트를 걸어서 누가 필드를 제어할려고 하는지 디버깅할때 용이
 
-> set 메서드에 브레이크 포인트를 걸어서 누가 필드를 제어할려고 하는지 디버깅할때 용이
+```c#
+class Foo
+{
+    int a; // 접근 지정자를 붙이지 않으면 기본 private!!
+}
+```
+
+## 클래스 형식 변환
+
+```c#
+// 기본 코드 베이스
+class Player
+{
+    protected int hp;
+    protected int attack;
+}
+
+class Knight : Player
+{
+
+}
+
+class Mage : Player
+{
+    public int mp;
+}
+```
+
+```c#
+Knight knight = new Knight();
+Mage mage = new Mage();
+
+// Mage 타입 -> Player 타입 (업 캐스팅) (위험하지 않다!)
+// Player 타입 -> Mage 타입 (다운 캐스팅) (될 수도 있고 안 될 수도 있고 case by case)
+Player magePlayer = mage;
+Mage mage2 = (Mage)magePlayer;
+```
+
+```c#
+static void EnterGame(Player player)
+{
+    Mage mage = (Mage)player;
+    mage.mp = 10; // 매개변수로 knight가 들어오면 캐스팅 실패
+}
+
+static void Main(string[] args)
+{
+    Knight knight = new Knight();
+    Mage mage = new Mage();
+
+    EnterGame(knight);
+}
+```
+
+```c#
+// 첫 번째 해결 방법
+static void EnterGame(Player player)
+{
+    bool isMage = (player is Mage); // 핵심!
+    if (isMage)
+    {
+        Mage mage = (Mage)player;
+        mage.mp = 10;
+    }
+}
+```
+
+```c#
+// 두 번째 해결 방법 (추천!!!!!)
+static void EnterGame(Player player)
+{
+    Mage mage = (player as Mage); // 핵심!, 형변환 가능하면 형변환, 안되면 null
+    if (mage != null)
+    {
+        mage.mp = 10;
+    }
+}
+```
+
+## 다형성
+
+```c#
+// 오버라이딩 X
+class Player
+{
+    public void Move()
+    {
+        Console.WriteLine("Player 이동!");
+    }
+}
+
+class Knight : Player
+{
+    // 부모 클래스인 Player에도 Move 메서드가 있음.
+    // 새로 작성하기 위해 new 키워드로 선언.
+    public new void Move() 
+    {
+        Console.WriteLine("Knight 이동!");
+    }
+}
+```
+
+* 오버로딩(함수 이름의 재사용) / 오버라이딩(다형성을 이용하는것)
+
+```c#
+// 오버라이딩 O
+class Player
+{
+    public virtual void Move()
+    {
+        Console.WriteLine("Player 이동!");
+    }
+}
+
+class Knight : Player
+{
+    public override void Move()
+    {
+        Console.WriteLine("Knight 이동!");
+    }
+}
+```
+
+```c#
+static void EnterGame(Player player)
+{
+    // 만약 오버라이딩을 안 했다면 Player 클래스의 Move를 호출하지만
+    // 오버라이딩을 했다면 해당하는 타입의 클래스의(Mage)의 Move를 호출한다.
+    player.Move();
+
+    Mage mage = (player as Mage);
+    if (mage != null)
+    {
+        mage.mp = 10;
+    }
+}
+
+static void Main(string[] args)
+{
+    Knight knight = new Knight();
+    Mage mage = new Mage();
+
+    EnterGame(knight);
+}
+```
+
+> override 키워드를 사용했다면 상위 클래스가 해당 메소드에 최소한 한 번은 virtual 
+키워드로 선언해야 한다!
+
+```c#
+class Knight : Player
+{
+    public override void Move()
+    {
+        base.Move(); // 상위 클래스의 Move 호출
+
+        Console.WriteLine("Knight 이동!");
+    }
+}
+```
+
+```c#
+// C++에는 없는 C#에는 있는 문법: sealed
+// Knight를 상속받는 자식들은 더이상 해당 메서드를 건들지 말아라!! 라는 뜻
+class Knight : Player
+{
+    public sealed override void Move() // 핵심
+    {
+        Console.WriteLine("Knight 이동!");
+    }
+}
+```
+
+> virtual로 선언한 메서드는 일반 메서드보다 성능에 더 부담을 준다.
+> * 가상 메소드는 일반적으로 함수 포인터가 저장되는 소위 가상 메서드 테이블(vtable)을 통해 구현된다. 이렇게 하면 실제 호출에 방향성이 추가된다. (vtable에서 호출할 함수의 주소를 가져온 다음 호출해야 함). 그러므로 성능이 더 떨어진다.
+> * 그러나 이것은 보통 큰 문제가 되진 않는다.
+
+&nbsp;
+
+## 문자열 둘러보기
+```c#
+string name = "Harry Potter";
+
+// 1. 찾기
+bool found = name.Contains("Harry"); // true
+int index = name.IndexOf('P'); // 6
+int index = name.IndexOf('z'); // -1
+
+// 2. 변형
+name = name + " Junior";
+string lowerCaseName = name.ToLower(); // 소문자로
+string upperCaseName = name.ToUpper(); // 대문자로
+string newName = name.Replace('r', 'l');
+
+// 3. 분할
+string[] names = name.Split(new char[] { ' ' });
+string substringName = name.SubString(6); // Potter Junior
+```
+
+&nbsp;
+# TextRPG2
+## TextRPG2 플레이어 생성
+* C#은 파일 분할 시 include 작업 없이 동일 네임스페이스에서 똑같이 작업 가능하다.
+* 매개변수가 있는 생성자를 만들었다면 디폴트 생성자는 더 이상 사용할 수 없다.
+&nbsp;
+
+## TextRPG2 몬스터 생성
+* 구현 내용
+&nbsp;
 
