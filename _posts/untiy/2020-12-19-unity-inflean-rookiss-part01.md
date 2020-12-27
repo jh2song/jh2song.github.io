@@ -889,3 +889,162 @@ static void Main(string[] args)
 
 # 알아두면 유용한 기타 문법
 ## Generic (일반화)
+* var과 object 차이점
+> * var: 컴파일러가 형을 알아서 맞춰줌 ex) var -> string
+> * object: 진짜 형이 object
+
+> object는 참조 타입 (힙을 사용)
+
+```c#
+class MyList<T>
+{
+    T[] arr = new T[10];
+
+    public T GetItem(int i)
+    {
+        return arr[i];
+    }
+}
+```
+
+```c#
+static void Test<T>(T input)
+{
+
+}
+
+static void Main(string[] args)
+{
+    Test<int>(3);
+    Test<float>(3.0f);
+}
+```
+
+```c#
+// T는 값 형식 이어야한다!
+class MyList<T> where T : struct
+{
+    T[] arr = new T[10];
+
+    public T GetItem(int i)
+    {
+        return arr[i];
+    }
+}
+```
+
+```c#
+// T는 참조 형식 이어야한다!
+class MyList<T> where T : class
+{
+    T[] arr = new T[10];
+
+    public T GetItem(int i)
+    {
+        return arr[i];
+    }
+}
+```
+
+```c#
+// T는 Monster, 혹은 Monster를 상속받은 클래스 이어야한다!
+class MyList<T> where T : Monster
+{
+    T[] arr = new T[10];
+
+    public T GetItem(int i)
+    {
+        return arr[i];
+    }
+}
+```
+
+## Interface (인터페이스)
+```c#
+// 추상클래스
+abstract class Monster // new Monster() 불가능 (추상클래스 이므로)
+{
+    public abstract void Shout(); // {} 같은 본문이 있으면 안됨
+}
+
+class Skeleton : Monster
+{
+    // 에러가 뜬다!!
+    // 왜냐하면 상속된 추상 멤버 Shout를 구현하지 않았기 때문
+}
+```
+
+* C#에선 다중상속을 할 수 없다. -> 인터페이스로 사용해야함
+> 다중상속의 단점: 죽음의 다이아몬드
+
+```c#
+// 인터페이스
+interface IFlyable
+{
+    void Fly(); // 접근지정자, abstract 키워드 등을 쓸 필요없다.
+}
+
+class FlyableOrc : Orc, IFlyable
+{
+    public void Fly() // void Fly()를 무조건 구현해야한다.
+    {
+
+    }
+}
+
+static void DoFly(IFlyable flyable)
+{
+    flyable.Fly();
+}
+
+static void Main(string[] args)
+{
+    FlyableOrc orc = new FlyableOrc();
+    DoFly(orc); 
+}
+```
+
+```c#
+interface IFace
+{
+    void Method();
+}
+
+abstract class Face
+{
+    public virtual void Method()
+    {
+        Console.WriteLine("Face Class 호출");
+    }
+}
+
+class DerivedFace : Face, IFace
+{
+    public override void Method()
+    {
+        base.Method();
+    }
+
+    void IFace.Method()
+    {
+        Console.WriteLine("DerivedFace에서 IFace 오버라이딩");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        DerivedFace df = new DerivedFace();
+        df.Method(); // 출력: "Face Class 호출"
+
+        // 에러
+        // IFace f = new IFace();
+
+        IFace f = new DerivedFace();
+        f.Method(); // 출력: "DerivedFace에서 IFace 오버라이딩"
+    }
+}
+```
+
+## Property (프로퍼티)
