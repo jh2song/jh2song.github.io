@@ -1048,3 +1048,173 @@ class Program
 ```
 
 ## Property (프로퍼티)
+
+```c#
+class Knight
+{
+    protected int hp;
+
+    public int Hp
+    {
+        get {return hp;}
+        set {hp=value;}
+    }
+}
+
+static void Main(string[] args)
+{
+    // 프로퍼티
+    // 은닉성 보장
+    Knight knight = new Knight();
+    knight.Hp = 100;
+    int hp = knight.Hp;
+}
+```
+
+```c#
+public int Hp
+{
+    get {return hp;}
+    private set {hp=value;} // 해당 클래스 내에만 사용가능.
+
+    void Test()
+    {
+        Hp = 100; // OK!
+    }
+}
+
+static void Main(string[] args)
+{
+    Knight knight = new Knight();
+    knight.Hp = 100; // 에러!
+}
+```
+
+```c#
+// 자동 구현 프로퍼티
+class Knight
+{
+    public int Hp {get; set;}
+    public int Mp {get; set;} = 100; // 초기화: C# 7.0 부터 추가된 기능
+}
+```
+
+## Delegate (대리자)
+
+* 해당 강좌에서 가장 중요함
+&nbsp;
+
+* 콜백: 함수 자체를 인자로 넘겨준 다음에 나중에 필요로할때 안쪽에서 역으로 호출
+> 업체 사장 - 사장님의 비서 - 우리의 연락처/용건을 받음 - 거꾸로 연락을 주세요!
+
+```c#
+delegate int OnClicked();
+// delegate -> 형식은 형식인데, 함수 자체를 인자로 넘겨주는 그런 형식
+// 반환: int 입력: void
+// OnClicked이 delegate 형식의 이름이다!
+
+static void ButtonPressed(OnClicked clickedFunction)
+{
+    clickedFunction();
+}
+
+static int TestDelegate()
+{
+    Console.WriteLine("Hello Delegate");
+    return 0;
+}
+
+static int TestDelegate2()
+{
+    Console.WriteLine("Hello Delegate 2");
+    return 0;
+}
+
+static void Main(string[] args)
+{
+    // case 1
+    ButtonPressed(TestDelegate); // Hello Delegate가 출력됨
+
+    // case 2 Delegate Chaining
+    OnClicked clicked = new OnClicked(TestDelegate);
+    clicked += TestDelegate2;
+
+    ButtonPressed(clicked);
+    // 출력
+    // Hello Delegate
+    // Hello Delegate 2
+}
+```
+
+## Event (이벤트)
+* delegate의 단점: delegate가 다 좋은데(?), 이 delegate를 외부에서 멋대로 호출하는 문제가 있다. -> event로 해결
+
+```c#
+// 1에서만 호출되어야 하는데 2에서도 호출이 된다
+// 만약 clicked이 굉장히 중요한 정보면? -> 설계 미스
+
+static void Main(string[] args)
+{
+    OnClicked clicked = new OnClicked(TestDelegate);
+    clicked += TestDelegate2;
+
+    // 1
+    ButtonPressed(clicked);
+
+    // 2
+    clicked();
+}
+```
+
+```c#
+// InputManager.cs
+
+// Observer Pattern
+class InputManager
+{
+    // 둘다 접근지정자를 똑같이 맞춰줘야됨
+    public delegate void OnInputKey();
+    public event OnInputKey InputKey();
+
+    public void Update()
+    {
+        if (Console.KeyAvailable == false)
+            return;
+
+        ConsoleKeyInfo info = Console.ReadKey();
+        if (info.key == ConsoleKey.A)
+        {
+            // 모두에게 알려준다!
+            InputKey();
+        }
+    }
+}
+```
+
+```c#
+// Program.cs
+
+// 무한루프 돌다가 A를 누르면 "Input Received" 메시지가 출력됨!
+class Program
+{
+    static void OnInputTest()
+    {
+        Console.WriteLine("Input Received");
+    }
+
+    static void Main(string[] args)
+    {
+        InputManager inputManager = new InputManager();
+
+        inputManager.InputKey += OnInputTest(); // 이벤트 구독
+
+        while (true)
+        {
+            inputManager.Update();
+        }
+
+        inputManager.InputKey(); // Error!
+    }
+}
+
+```
