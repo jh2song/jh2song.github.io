@@ -3,7 +3,7 @@ title: "[C#과 유니티로 만드는 MMORPG 게임 개발 시리즈] Part1: C# 
 excerpt: "20/12/19 - 강의 노트"
 tags: ["unity", "c#"]
 categories: ["unity"]
-last_modified_at: "2020-12-26"
+last_modified_at: "2020-12-27"
 toc: true
 toc_sticky: true
 ---
