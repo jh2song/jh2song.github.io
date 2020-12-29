@@ -1334,3 +1334,94 @@ static void Main(...)
 ```
 
 ## Reflection (리플렉션)
+* Reflection: X-Ray
+
+```c#
+class Program
+{
+    class Important : System.Attribute
+    {
+        string message;
+
+        public Important(string message) {this.message = message;}
+    }
+
+    class Monster
+    {
+        // Attribute
+        [Important("Very Important")]
+        public int hp;
+        protected int attack;
+        private float speed;
+
+        void Attack() {}
+    }
+
+    static void Main(...)
+    {
+        // Reflection 예제
+        Monster monster = new Monster();
+        Type type = monster.GetType();
+
+        // type.XXX 하면 많은 정보를 알 수 있음.
+        
+        var fields = type.GetFields(System.Reflection.BindingFlags.Public
+        | System.Reflection.BindingFlags.NonPublic
+        | System.Reflection.BindingFlags.Static
+        | System.Reflection.BindingFlags.Instance);
+
+        foreach (FieldInfo field in fields)
+        {
+            string access = "protected";
+            if (field.IsPublic)
+                access = "public";
+            else if (field.IsPrivate)
+                access = "private";
+
+            // Attribute 예제
+            // 브레이크포인트를 걸고 확인하면 hp 필드에서
+            // attributes 값이 Very Important 인 것을 확인할 수 있다.
+            var attributes = field.GetCustomAttributes();
+
+            // public int hp와 같이 출력
+            Console.WriteLine($"{access} {field.FieldType.Name} {field.Name}");
+        }
+    }
+}
+```
+
+## Nullable (널러블)
+
+```c#
+class Monster
+{
+    public int Id {get; set;}
+}
+
+static void Main(...)
+{
+    // Nullable -> Null + able
+
+    // number에 5를 넣으면 5가 출력되고 null이면 0을 출력한다.
+    int? number = 5; 
+
+    int b = number ?? 0;
+    Console.WriteLine(b);
+
+    /*-----------------------*/
+    Monster monster = null;
+
+    // null이 아니라면 id를 뽑아주고
+    // null이라면 null을 넣어주세요!
+    int? id = monster?.Id; 
+
+    /* 위 코드와 아래 코드가 동일
+    if (monster == null)
+        id = null;
+    else
+        id = monster.Id;
+    */
+
+
+}
+```
