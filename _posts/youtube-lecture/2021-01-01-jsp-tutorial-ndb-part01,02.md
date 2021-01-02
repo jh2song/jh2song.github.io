@@ -1,9 +1,9 @@
 ---
-title: "JSP 강의평가 웹 사이트 개발하기 강의노트"
+title: "JSP 강의평가 웹 사이트 개발하기 강의노트 - 1장, 2장"
 excerpt: "21/01/01 - 강의 노트"
 tags: ["youtube-lecture", "jsp"]
 categories: ["youtube-lecture"]
-last_modified_at: "2021-01-01"
+last_modified_at: "2021-01-02"
 toc: true
 toc_sticky: true
 ---
@@ -58,3 +58,5 @@ toc_sticky: true
 ![image](https://user-images.githubusercontent.com/43688074/103453618-11081780-4d1f-11eb-9a0b-368d21f5c7d5.png)
 ## 서버 선택
 ![image](https://user-images.githubusercontent.com/43688074/103453621-12d1db00-4d1f-11eb-927b-3362bde10f84.png)
+## 최종 화면
+![image](https://user-images.githubusercontent.com/43688074/103455227-b70f4e00-4d2e-11eb-93a6-1a857863a44e.png)
