@@ -1,5 +1,5 @@
 ---
-title: "JSP 강의평가 웹 사이트 개발하기 강의노트 - 1장, 2장"
+title: "JSP 강의평가 웹 사이트 개발하기 강의노트 - 1강, 2강"
 excerpt: "21/01/01 - 강의 노트"
 tags: ["youtube-lecture", "jsp"]
 categories: ["youtube-lecture"]
