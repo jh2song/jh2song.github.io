@@ -23,7 +23,7 @@ toc_sticky: true
   * 2020.10
   * 252nd / 334th
   * Team Name: HACKjeongdap
-  * [scoreboard](http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/){: target="_blank"}
+  * Scoreboard: http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/
 
 ### 학과 성적 우등상
   * 2018.07
