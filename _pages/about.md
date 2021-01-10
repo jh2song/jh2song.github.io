@@ -17,13 +17,13 @@ toc_sticky: true
   * 2020.12
   * 장려상
   * 로봇청소기와 제어 앱 제작
-  * 수행 업무: Android 로봇청소기 제어 앱 제작
+  * 본인 수행 업무: Android 로봇청소기 제어 앱 제작
 
 ### 2020 ICPC Korea: Seoul Regional First Round
   * 2020.10
   * 252nd / 334th
   * Team Name: HACKjeongdap
-  * Scoreboard: http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/
+  * Scoreboard: [http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/](http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/)
 
 ### 학과 성적 우등상
   * 2018.07
