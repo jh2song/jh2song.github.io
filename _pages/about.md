@@ -21,6 +21,8 @@ toc_sticky: true
 </details>
 
 
+&nbsp;
+
 ## 학력
 
 ### 동의대학교 컴퓨터공학과
