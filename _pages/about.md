@@ -10,7 +10,7 @@ toc_sticky: true
 ### 동의대학교 컴퓨터공학과
 
 <details>
-<h1><summary>상세 이력 보기</summary></h1>
+<summary>상세 이력 보기</summary>
 <div markdown="1">
 
 * 2018.03 ~
