@@ -5,6 +5,22 @@ last_modified_at: 2021-01-10
 toc: true
 toc_sticky: true
 ---
+## 경력
+
+### 디비밸리(주)
+
+<details>
+<summary>상세 이력 보기</summary>
+<div markdown="1">
+
+* 2020.12.30 ~
+* 인턴
+* 본인 수행 업무: 이벤트단 쿼리 정리. 전자정부표준프레임워크로 서비스 고도화 (Spring MVC, MyBatis, eGovFramework)
+
+</div>
+</details>
+
+
 ## 학력
 
 ### 동의대학교 컴퓨터공학과
