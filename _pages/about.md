@@ -19,6 +19,9 @@ toc_sticky: true
 </div>
 </details>
 
+
+&nbsp;
+
 ## 대회 참가 및 수상
 
 ### 스마트IT 융합 FLEX 대회
@@ -63,7 +66,10 @@ toc_sticky: true
 
 </div>
 </details>
-  
+
+
+&nbsp;
+
 ## 대외활동
 
 ### 동의대 알고리즘 동아리
