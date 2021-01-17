@@ -116,27 +116,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import util.DatabaseUtil;
+
 public class UserDAO {
 	
-	private Connection conn;
-	private ResultSet rs;
-
-	public UserDAO() {
-		try {
-			String dbURL = "jdbc:mysql://localhost:3306/LectureEvaluation";
-			String dbID = "root";
-			String dbPassword = "root1234";
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public int login(String userID, String userPassword) {
 		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -148,14 +139,22 @@ public class UserDAO {
 			return -1; // 아이디 없음
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {if (conn != null) conn.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (pstmt != null) pstmt.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (rs != null) rs.close(); } catch (Exception e) {e.printStackTrace();}
 		}
 		return -2; // 데이터베이스 오류
 	}
 
 	public int join(UserDTO user) {
 		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, false)";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserPassword());
 			pstmt.setString(3, user.getUserEmail());
@@ -163,14 +162,22 @@ public class UserDAO {
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {if (conn != null) conn.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (pstmt != null) pstmt.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (rs != null) rs.close(); } catch (Exception e) {e.printStackTrace();}
 		}
 		return -1; // 회원가입 실패
 	}
 
 	public String getUserEmail(String userID) {
 		String SQL = "SELECT userEmail FROM USER WHERE userID = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -178,14 +185,22 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {if (conn != null) conn.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (pstmt != null) pstmt.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (rs != null) rs.close(); } catch (Exception e) {e.printStackTrace();}
 		}
 		return null; // 데이터베이스 오류
 	}
 
 	public boolean getUserEmailChecked(String userID) {
 		String SQL = "SELECT userEmailChecked FROM USER WHERE userID = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -193,19 +208,31 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {if (conn != null) conn.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (pstmt != null) pstmt.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (rs != null) rs.close(); } catch (Exception e) {e.printStackTrace();}
 		}
 		return false; // 데이터베이스 오류
 	}
 
 	public boolean setUserEmailChecked(String userID) {
 		String SQL = "UPDATE USER SET userEmailChecked = true WHERE userID = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.executeUpdate();
 			return true; // 이메일 등록 설정 성공
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {if (conn != null) conn.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (pstmt != null) pstmt.close(); } catch (Exception e) {e.printStackTrace();}
+			try {if (rs != null) rs.close(); } catch (Exception e) {e.printStackTrace();}
 		}
 		return false; // 이메일 등록 설정 실패
 	}
