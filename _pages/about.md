@@ -80,7 +80,7 @@ toc_sticky: true
 <div markdown="1">
 
 * 2018.07
-* 수석
+* 수석 (1/102)
 
 </div>
 </details>
