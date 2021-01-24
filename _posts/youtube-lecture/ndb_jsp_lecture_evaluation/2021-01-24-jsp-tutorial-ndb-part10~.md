@@ -7,5 +7,5 @@ last_modified_at: "2021-01-24"
 toc: true
 toc_sticky: true
 ---
-# 프로젝트 링크
+# 프로젝트 링크 (Private Repository)
 [https://github.com/jh2song/my-dbn-lecture](https://github.com/jh2song/my-dbn-lecture)
