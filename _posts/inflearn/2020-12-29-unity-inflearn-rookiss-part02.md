@@ -1,8 +1,8 @@
 ---
 title: "[C#과 유니티로 만드는 MMORPG 게임 개발 시리즈] Part2: 자료구조와 알고리즘 강의 노트"
 excerpt: "20/12/29 - 강의 노트"
-tags: ["inflean", "unity", "c#"]
-categories: ["inflean"]
+tags: ["inflearn", "unity", "c#"]
+categories: ["inflearn"]
 last_modified_at: "2020-12-29"
 toc: true
 toc_sticky: true
