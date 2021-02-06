@@ -105,17 +105,82 @@ int main()
 
 ## 문제 설명
 
+무게와 가치가 차례대로 주어진다. 준서가 버틸 수 있는 무게(K) 선에서 가장 가치가 높게 고를때의 합을 구하는 문제다.
+
 ## 풀이
+
+dp[i][j]: (i번째) 짐까지 탐색시 (j무게)에서 나올 수 있는 최대 가치
+
+* 만약 (j무게)가 (i번째) 짐의 무게보다 작을 시
+> dp[i][j] = dp[i - 1][j];
+* 그렇지 않다면
+> dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight] + value);
+* 최종 정답 (n번째 짐까지 탐색시 k무게에서 나올 수 있는 최대 가치)
+> dp[n][k];
 
 ## 코드
 
+|메모리|시간|
+|---|---|
+|41472 KB|32 ms|
+
+```c++
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int n;
+int k;
+int arr[101][2];
+int dp[101][100001];
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	cin >> n >> k;
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> arr[i][0] >> arr[i][1];
+	}
+
+	// dp[i][j]: (i번째) 짐까지 탐색시 (j무게)에서 나올 수 있는 최대 가치
+	for (int i = 1; i <= n; i++)
+	{
+		int weight = arr[i][0];
+		int value = arr[i][1];
+		for (int j = 1; j <= k; j++)
+		{
+			if (j < weight)
+				dp[i][j] = dp[i - 1][j];
+			else
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight] + value);
+		}
+	}
+
+	cout << dp[n][k];
+}
+```
+
 ## 소감
+
+DP는 어렵다... 점화식 세우기가 까다롭다. 실버 문제를 짬짬히 풀면서 DP 감을 다져놔야겠다.
 
 <br>
 
 # C번 - [탈출](https://www.acmicpc.net/problem/3055){: target="_blank"} (3055)
 
 ## 문제 설명
+
+배열은 크게 3가지로 구성된다. 'D', 'S', '*', '.'
+
+<br>
+
+* 'D' : 최종 도착지
+* 'S' : 시작점
+* '.' : 비어있는 점
+* '\*' : 물의 좌표. 물은 매 분 4방향으로 '.' 을 '*'로 채운다.
 
 ## 풀이
 
