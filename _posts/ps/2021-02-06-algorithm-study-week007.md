@@ -256,11 +256,12 @@ int main()
 int BFS()
 {
     int ret = 0;
-    while (true) {
-
+    while (true) 
+	{
         // 물
         int qSize = q.size();
-        for (int i = 0; i < qSize; i++) {
+        for (int i = 0; i < qSize; i++) 
+		{
             int y = q.front().first;
             int x = q.front().second;
             q.pop();
@@ -268,7 +269,8 @@ int BFS()
                 continue;
             visited[y][x] = true;
 
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 4; j++) 
+			{
                 int nextY = y + dy[j];
                 int nextX = x + dx[j];
 
@@ -283,7 +285,8 @@ int BFS()
 
         // 고슴도치
         int q2Size = q2.size();
-        for (int i = 0; i < q2Size; i++) {
+        for (int i = 0; i < q2Size; i++) 
+		{
             int y = q2.front().first;
             int x = q2.front().second;
             q2.pop();
@@ -295,7 +298,8 @@ int BFS()
             if (y == endY && x == endX)
                 return ret;
 
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 4; j++) 
+			{
                 int nextY = y + dy[j];
                 int nextX = x + dx[j];
 
