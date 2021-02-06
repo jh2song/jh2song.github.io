@@ -219,49 +219,49 @@ int BFS();
 
 int main()
 {
-	ios::sync_with_stdio(false);
-	cin.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
-	cin >> n >> m;
-	for (int i = 1; i <= n; i++)
-	{
-		for (int j = 1; j <= m; j++)
-		{
-			cin >> arr[i][j];
-			if (arr[i][j] == 'D') // 비버의 굴이면
-			{
-				endY = i;
-				endX = j;
-			}
-			else if (arr[i][j] == 'S') // 고슴도치 시작 위치면
-			{
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            cin >> arr[i][j];
+            if (arr[i][j] == 'D') // 비버의 굴이면
+            {
+                endY = i;
+                endX = j;
+            }
+            else if (arr[i][j] == 'S') // 고슴도치 시작 위치면
+            {
                 q2.push({ i, j });
-			}
+            }
             else if (arr[i][j] == '*')
             {
                 q.push({ i,j });
             }
-		}
-	}
+        }
+    }
 
-	int ans = BFS();
+    int ans = BFS();
     if (ans == -1)
         cout << "KAKTUS";
     else
         cout << ans;
 
-	return 0;
+    return 0;
 }
 
 int BFS()
 {
     int ret = 0;
-    while (true) 
-	{
+    while (true) {
+
         // 물
         int qSize = q.size();
-        for (int i = 0; i < qSize; i++) 
-		{
+        for (int i = 0; i < qSize; i++)
+        {
             int y = q.front().first;
             int x = q.front().second;
             q.pop();
@@ -269,8 +269,8 @@ int BFS()
                 continue;
             visited[y][x] = true;
 
-            for (int j = 0; j < 4; j++) 
-			{
+            for (int j = 0; j < 4; j++)
+            {
                 int nextY = y + dy[j];
                 int nextX = x + dx[j];
 
@@ -285,8 +285,8 @@ int BFS()
 
         // 고슴도치
         int q2Size = q2.size();
-        for (int i = 0; i < q2Size; i++) 
-		{
+        for (int i = 0; i < q2Size; i++)
+        {
             int y = q2.front().first;
             int x = q2.front().second;
             q2.pop();
@@ -298,8 +298,8 @@ int BFS()
             if (y == endY && x == endX)
                 return ret;
 
-            for (int j = 0; j < 4; j++) 
-			{
+            for (int j = 0; j < 4; j++)
+            {
                 int nextY = y + dy[j];
                 int nextX = x + dx[j];
 
