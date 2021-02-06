@@ -181,9 +181,141 @@ DP는 어렵다... 점화식 세우기가 까다롭다. 실버 문제를 짬짬�
 * 'S' : 시작점
 * '.' : 비어있는 점
 * '\*' : 물의 좌표. 물은 매 분 4방향으로 '.' 을 '*'로 채운다.
+* 'X' : 벽
+<br>
+
+S에서 시작해서 D까지 무사히 갈 수 있으면 탐색 비용을 출력하고 그렇지 않다면 "KAKTUS"을 출력해야 한다.
 
 ## 풀이
 
+BFS를 두 번 해야 한다. 물의 상태를 먼저 탐색해야 할까? 아니면 고슴도치의 상태를 먼저 탐색해야 할까? 정답은 물의 상태를 먼저 탐색해야 한다. 
+> 고슴도치는 물이 찰 예정인 칸으로 이동할 수 없다.
+BFS를 하면서 고슴도치의 상태가 최종 도착지 'D'점에 도착하면 탐색 비용을 출력하고 BFS시 해당 점에 갈 수 없다면 "KAKTUS"를 출력한다.
+
 ## 코드
 
+|메모리|시간|
+|---|---|
+|2152 KB|0 ms|
+
+```c++
+#include <iostream>
+#include <queue>
+using namespace std;
+
+typedef pair<int, int> pii;
+
+int n, m;
+char arr[51][51];
+bool visited[51][51];
+int endY, endX;
+int dy[4] = { -1,0,1,0 };
+int dx[4] = { 0,1,0,-1 };
+queue<pii> q, q2;
+
+int BFS();
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	cin >> n >> m;
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= m; j++)
+		{
+			cin >> arr[i][j];
+			if (arr[i][j] == 'D') // 비버의 굴이면
+			{
+				endY = i;
+				endX = j;
+			}
+			else if (arr[i][j] == 'S') // 고슴도치 시작 위치면
+			{
+                q2.push({ i, j });
+			}
+            else if (arr[i][j] == '*')
+            {
+                q.push({ i,j });
+            }
+		}
+	}
+
+	int ans = BFS();
+    if (ans == -1)
+        cout << "KAKTUS";
+    else
+        cout << ans;
+
+	return 0;
+}
+
+int BFS()
+{
+    int ret = 0;
+    while (true) {
+
+        // 물
+        int qSize = q.size();
+        for (int i = 0; i < qSize; i++) {
+            int y = q.front().first;
+            int x = q.front().second;
+            q.pop();
+            if (visited[y][x] == true)
+                continue;
+            visited[y][x] = true;
+
+            for (int j = 0; j < 4; j++) {
+                int nextY = y + dy[j];
+                int nextX = x + dx[j];
+
+                // 범위 바깥이거나 X이거나 방문했으면
+                if (nextY < 1 || nextY > n || nextX < 1 || nextX > m || arr[nextY][nextX] == 'X' ||
+                    visited[nextY][nextX] == true || arr[nextY][nextX] == 'D')
+                    continue;
+
+                q.push({ nextY, nextX });
+            }
+        }
+
+        // 고슴도치
+        int q2Size = q2.size();
+        for (int i = 0; i < q2Size; i++) {
+            int y = q2.front().first;
+            int x = q2.front().second;
+            q2.pop();
+            if (visited[y][x] == true)
+                continue;
+            visited[y][x] = true;
+
+            // y, x가 D의 좌표로 왔으면
+            if (y == endY && x == endX)
+                return ret;
+
+            for (int j = 0; j < 4; j++) {
+                int nextY = y + dy[j];
+                int nextX = x + dx[j];
+
+                // 범위 바깥이거나 X이거나 방문했으면
+                if (nextY < 1 || nextY > n || nextX < 1 || nextX > m || arr[nextY][nextX] == 'X' ||
+                    visited[nextY][nextX] == true)
+                    continue;
+
+                q2.push({ nextY, nextX });
+            }
+        }
+
+        if (q.empty() && q2.empty())
+            break;
+
+        ret++;
+    }
+
+    return -1;
+}
+```
+
 ## 소감
+
+BFS를 두 번 해야 된다는 신박한 문제다. 매우 좋은 문제인 듯 하다. BFS/DFS 문제는 풀 때는 매우 귀찮다. ㅋㅋㅋ 구현이 매우 손이 많이 가기 때문이다. 그래도 귀찮은걸 참고 첫 트에 AC를 맞아서 기뻤다. 아마 귀찮아 하는 것도 아직 BFS/DFS가 아직 눈 감고 할 정도로 손에 안 익어 적응이 안되서 그런 것일 수도 있다.
