@@ -5,6 +5,7 @@ last_modified_at: 2021-01-10
 toc: true
 toc_sticky: true
 ---
+
 ## 경력
 
 ### 디비밸리(주)
@@ -13,13 +14,12 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-* 2020.12.30 ~
-* 인턴
-* 본인 수행 업무: 이벤트단 쿼리 정리. 전자정부표준프레임워크로 서비스 고도화 (Spring MVC, MyBatis, eGovFramework)
+- 2020.12.30 ~
+- 인턴
+- 본인 수행 업무: 이벤트단 쿼리 정리. 전자정부표준프레임워크로 서비스 고도화 (Spring MVC, MyBatis, eGovFramework)
 
 </div>
 </details>
-
 
 &nbsp;
 
@@ -31,12 +31,11 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-* 2018.03 ~
-* 학사
+- 2018.03 ~
+- 학사
 
 </div>
 </details>
-
 
 &nbsp;
 
@@ -48,14 +47,13 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-* 2020.12
-* 장려상
-* 로봇청소기와 제어 앱 제작
-* 본인 수행 업무: Android 로봇청소기 제어 앱 제작
+- 2020.12
+- 장려상
+- 로봇청소기와 제어 앱 제작
+- 본인 수행 업무: Android 로봇청소기 제어 앱 제작
 
 </div>
 </details>
-
 
 ### 2020 ICPC Korea: Seoul Regional First Round
 
@@ -63,15 +61,13 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-* 2020.10
-* 252nd / 334th
-* Team Name: HACKjeongdap
-* Scoreboard: [http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/](http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/)
+- 2020.10
+- 252nd / 334th
+- Team Name: HACKjeongdap
+- Scoreboard: [Scoreboard Link](http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/)
 
 </div>
 </details>
-
-
 
 ### 학과 성적 우등상
 
@@ -79,12 +75,11 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-* 2018.07
-* 수석 (1/102)
+- 2018.07
+- 수석 (1/102)
 
 </div>
 </details>
-
 
 &nbsp;
 
@@ -96,8 +91,8 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-* 2020.12 ~
-* 회장
+- 2020.12 ~
+- 회장
 
 </div>
 </details>
