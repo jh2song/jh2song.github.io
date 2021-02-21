@@ -141,11 +141,66 @@ int solve(int i, int j)
 
 ## 문제 설명
 
+슬라임이 여러 마리 있다. 슬라임을 적절히 합성하여 1마리의 슬라임으로 만드려 한다. 두 슬라임 에너지의 곱의 크기만큼 전기 에너지가 소요되고 그 크기가 새로운 슬라임의 에너지가 된다. 합성 단계마다 필요한 전기 에너지를 모두 곱한 값이 최소가 되도록 합성을 해야 한다. 슬라임을 끝까지 합성했을 때 청구될 비용의 최소값을 1,000,000,007로 나눈 나머지를 출력해야 한다.
+
 ## 풀이
+
+작은것부터 곱해 나가면 된다. moduler 연산이 매우매우 중요한데 작은거 2개를 곱한 뒤 `정답 = 정답 * (곱한 값 % DIV) % DIV` 으로 계산해야 정확하게 된다. 안 그러면 Overflow가 날 가능성이 크다.
 
 ## 코드
 
+```c++
+#include <iostream>
+#include <queue>
+#include <functional>
+
+#define DIV 1000000007
+
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int t;
+	cin >> t;
+	while (t--)
+	{
+		priority_queue<ll, vector<ll>, greater<ll>> pq;
+
+		int n;
+		cin >> n;
+
+		ll d;
+		while (n--)
+		{
+			cin >> d;
+			pq.push(d);
+		}
+
+		ll answer = 1;
+		while (pq.size() != 1)
+		{
+			ll p1 = pq.top();
+			pq.pop();
+			ll p2 = pq.top();
+			pq.pop();
+			ll newEle = p1 * p2;
+			answer = answer * (newEle % DIV) % DIV;
+			pq.push(newEle);
+		}
+
+		cout << answer << "\n";
+	}
+}
+```
+
 ## 소감
+
+작은것부터 곱해나가면 된다는것을 빠르게 catch 하지 못하였다. 사실 이 문제는 실버급 문제라고 생각한다. 우선순위 큐만 쓰면 되기 때문이다.
 
 <br>
 
