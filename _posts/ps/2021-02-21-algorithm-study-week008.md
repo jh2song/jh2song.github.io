@@ -208,8 +208,75 @@ int main()
 
 ## 문제 설명
 
+기관차가 끌고 가던 객차에 타는 승객을 소형 기관차 3대로 나눠서 끌고 갔을때 최대로 실을 수 있는 승객의 수를 구하는 문제이다.
+
 ## 풀이
+
+소형 기관차가 끌 수 있는 객차의 수를 n이라 하자.
+
+- 점화식
+
+  > dp[i][j]: i번째 객차까지 세었을 때 j개의 소형 기관차가 이미 결정된 경우 실을 수 있는 승객의 최대 값  
+  > prev = dp[i - n][j - 1]  
+  > boundSum(start, end): 객차의 start부터 end까지의 합  
+  > dp[i][j] = max(dp[i - 1][j], prev + boundSum(i - n + 1, i))
 
 ## 코드
 
+```c++
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int s; // 기관차 사이즈
+int arr[50001];
+int n; // 최대로 끌 수 있는 객차 수
+int dp[50001][4];
+
+int boundSum(int start, int end)
+{
+	int ret = 0;
+
+	for (int i = start; i <= end; i++)
+		ret += arr[i];
+
+	return ret;
+}
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	cin >> s;
+	for (int i = 1; i <= s; i++)
+	{
+		cin >> arr[i];
+	}
+	cin >> n;
+
+	int answer = -1;
+	for (int i = 1; i <= s; i++)
+	{
+		for (int j = 1; j <= 3; j++)
+		{
+			int prev;
+			if (i - n >= 1)
+				prev = dp[i - n][j - 1];
+			else
+				prev = 0;
+
+			dp[i][j] = max(dp[i - 1][j], prev + boundSum(i - n + 1, i));
+
+			if (j == 3)
+				answer = max(answer, dp[i][3]);
+		}
+	}
+
+	cout << answer;
+}
+```
+
 ## 소감
+
+골드 DP 문제가 고민을 조금만 하니 풀려서 신기했다. 슬슬 실력 오른듯? ㅋㅋ
