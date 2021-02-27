@@ -1,7 +1,7 @@
 ---
 permalink: /about/
 title: "송지훈 Jihoon Song"
-last_modified_at: 2021-01-10
+last_modified_at: 2021-02-27
 toc: true
 toc_sticky: true
 ---
@@ -14,7 +14,7 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-- 2020.12.30 ~
+- 2020.12.30 ~ 2021.02.26
 - 인턴
 - 본인 수행 업무: 이벤트단 쿼리 정리. 전자정부표준프레임워크로 서비스 고도화 (Spring MVC, MyBatis, eGovFramework)
 
@@ -64,7 +64,7 @@ toc_sticky: true
 - 2020.10
 - 252nd / 334th
 - Team Name: HACKjeongdap
-- Scoreboard: [Scoreboard Link](http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/)
+- Scoreboard: [Link](http://icpckorea.org/2020/preliminary/scoreboard/dbda78f0e4/)
 
 </div>
 </details>
