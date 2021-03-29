@@ -23,3 +23,62 @@ toc_sticky: true
 - Nodejs의 창시자는 V8엔진을 기반으로 하는 Nodejs를 만듬
 - 태초의 자바스크립트가 웹브라우저를 제어하는 것이라면, Nodejs는 자바스크립트를 이용하여 웹브라우저가 아닌 컴퓨터 자체를 제어함!!
 - 마치 Python, Java, PHP와 같이...
+
+<br>
+
+# 2강 2. 수업의 목적
+
+- 기존: HTML파일을 직접 만들어야 되서 사용자의 참여가 제한되었다.
+- 목적: 사용자에게 컨텐츠의 읽기 뿐만이 아니라 CRUD를 수행하게 함을 목적
+
+<br>
+
+# 3강 3. 설치
+
+- 기존 HTML 계층구조 
+![image](https://user-images.githubusercontent.com/43688074/112773062-6da17700-906f-11eb-9ee8-f67c51ec1042.png)
+
+- Nodejs 계층구조 
+![image](https://user-images.githubusercontent.com/43688074/112773066-7134fe00-906f-11eb-8634-1b334314ad44.png)
+
+<br>
+
+# 4강 3.1. 설치 (Windows)
+
+[https://nodejs.org/download/release/v8.11.2/](https://nodejs.org/download/release/v8.11.2/)
+
+- 설치 과정
+
+![image](https://user-images.githubusercontent.com/43688074/112773349-bb6aaf00-9070-11eb-9851-477529fea8b7.png)
+
+![image](https://user-images.githubusercontent.com/43688074/112773353-be659f80-9070-11eb-9130-3f68ca9365d8.png)
+
+![image](https://user-images.githubusercontent.com/43688074/112773355-c1609000-9070-11eb-8348-f1915bbb1ff9.png)
+
+![image](https://user-images.githubusercontent.com/43688074/112773359-c32a5380-9070-11eb-9ec7-0ea1d02216ed.png)
+
+![image](https://user-images.githubusercontent.com/43688074/112773363-c58cad80-9070-11eb-9436-763eda53f2c7.png)
+
+![image](https://user-images.githubusercontent.com/43688074/112773366-c7ef0780-9070-11eb-8b70-e6e619d269c3.png)
+
+```
+Microsoft Windows [Version 10.0.19041.867]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Users\spec0>node -v
+v8.11.2
+
+C:\Users\spec0>node
+> console.log(1+1);
+2
+undefined
+>
+(To exit, press ^C again or type .exit)
+>
+
+C:\Users\spec0>
+```
+
+![image](https://user-images.githubusercontent.com/43688074/112773720-03d69c80-9072-11eb-89ee-d86ee0cefd1c.png)
+
+<br>
