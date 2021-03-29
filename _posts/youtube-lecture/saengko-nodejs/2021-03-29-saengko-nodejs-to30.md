@@ -82,3 +82,73 @@ C:\Users\spec0>
 ![image](https://user-images.githubusercontent.com/43688074/112773720-03d69c80-9072-11eb-89ee-d86ee0cefd1c.png)
 
 <br>
+
+# 5강 3.2. 설치 (MacOS)
+
+- 생략
+
+<br>
+
+# 6강 3.3. 설치 (Linux & Codeanywhere)
+
+- 생략
+
+<br>
+
+# 7강 4. 공부방법
+
+- JavaScript
+    > 문법을 적당히 공부
+
+- Node.js runtime
+    > Nodejs의 기능들을 학습
+
+- Node.js Application
+    > Nodejs 기능들을 이용해서 애플리케이션을 제작
+
+- 이걸 반복
+
+<br>
+
+# 8강 5. Node.js로 웹서버 만들기
+
+[https://github.com/jh2song/WEB2-Nodejs/tree/main/02](https://github.com/jh2song/WEB2-Nodejs/tree/main/02)
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var app = http.createServer(function(request, response) {
+    var url = request.url;
+    if (request.url == '/') {
+        url = '/index.html';
+    }
+    if (request.url == '/favicon.ico') {
+        return response.writeHead(404);
+    }
+    response.writeHead(200);
+    response.end(fs.readFileSync(__dirname + url));
+});
+app.listen(3000);
+```
+
+<br>
+
+# 9강 6.1. JavaScript 문법 - Number Data type
+
+```javascript
+console.log(1+1);
+console.log(4-1);
+console.log(2*2);
+console.log(10/2);
+```
+
+<br>
+
+# 10강 6.2. JavaScript 문법 - String
+
+```javascript
+console.log('1'+'1');
+console.log('Hello World!!!'.length);
+```
+
+<br>
