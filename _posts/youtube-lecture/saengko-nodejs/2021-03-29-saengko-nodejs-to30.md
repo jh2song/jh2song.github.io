@@ -152,3 +152,67 @@ console.log('Hello World!!!'.length);
 ```
 
 <br>
+
+# 11강 7.1. JavaScript 문법 - 변수의 형식
+
+```javascript
+a = 1;
+console.log(a); // 1
+a = 2;
+console.log(a); // 2
+// 1 = 2;  // error!
+
+var c = 1; // 변수의 자료형을 가급적이면 붙이자!
+```
+
+<br>
+
+# 12강 7.2. JavaScript 문법 - 변수의 활용
+
+```javascript
+var name = 'Jihoon';
+var letter = 'Dear ' + name + ' fsdkajahsflsjlhsajd ' + name + ' sjasjdhla s hdjahfsadhjfds' + name + ' sjdhjlasdhfa dh dsajh ' + name + ' dsjslad lasd lsdafhj';
+console.log(letter);
+```
+
+<br>
+
+# 13강 8. JavaScript 문법 - Template Literal
+
+```javascript
+var name = 'k8805';
+// var letter = 'Dear ' + name + ' \n\nfsdkajahsflsjlhsajd ' + name + ' sjasjdhla s hdjahfsadhjfds' + name + ' sjdhjlasdhfa dh dsajh ' + name + ' dsjslad lasd lsdafhj';
+
+var letter = `Dear ${name} 
+
+fsdkajahsflsjlhsajd ${name} sjasjdhla s ${1+1} hdjahfsadhjfds ${name} sjdhjlasdhfa dh dsajh ${name} dsjslad lasd lsdafhj`;
+
+console.log(letter);
+/*
+출력: 
+Dear k8805 
+
+fsdkajahsflsjlhsajd k8805 sjasjdhla s hdjahfsadhjfds k8805 sjdhjlasdhfa dh dsajh k8805 dsjslad lasd lsdafhj
+*/
+```
+
+<br>
+
+# 14강 9. URL의 이해
+
+___URL: <u>http</u>://<u>opentutorials.org</u>:<u>3000</u>/<u>main</u>?<u>id=HTML&page=12</u>___
+
+- __http__: protocol (통신규칙 - 사용자가 서버에 접속할때 어떤 방식으로 통신 할 것인가?)
+    > http: HyperText Transfer Protocol: 웹브라우저와 웹서버가 서로 데이터를 주고 받기 위해서 만든 통신 규칙
+
+- __opentutorials.org__: host(domain) (인터넷에 접속되어 있는 각각의 컴퓨터들)
+
+- __3000__: port (한 대의 컴퓨터안에 여러대의 서버가 있을 수 있다. 그러면 클라이언트가 접속했을 때 그 중에 어떤 서버와 통신할 지 결정)
+
+- __main__: path (그 컴퓨터 안에 있는 어떤 디렉토리에 어떤 파일인지를 가리킨다)
+
+- __id=HTML&page=12__: query string (query string의 시작은 물음표로 하기로 약속, 값과 값은 &를 쓰기로 약속, key와 value는 = 으로 구분되어 있도록 약속)
+
+<br>
+
+# 15강 10. URL을 통해서 입력된 값 사용하기
