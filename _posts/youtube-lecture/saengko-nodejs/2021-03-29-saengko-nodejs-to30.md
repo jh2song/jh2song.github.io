@@ -298,3 +298,27 @@ app.listen(3000);
 <br>
 
 # 17강 12. Node.js의 파일 읽기 기능
+
+- 모듈: 기본적으로 제공하는 기능들을 그룹핑 해놓은 각각의 그룹들 
+
+- 파일 읽기 실습
+```javascript
+var fs = require('fs');
+/*
+fs.readFile('sample.txt', function(err, data) {
+    console.log(data);
+});
+
+출력
+<Buffer 6c 6f 72 65 6d 20 6c 6f 72 65 6d 20 6c 6f 72 65 6d 20 6c 6f 72 65 6d 20 6c 6f 72 65 6d 
+20 6c 6f 72 65 6d 20 6c 6f 72 65 6d 20 6c 6f 72 65 6d 6c 6f 72 ... >
+*/
+
+fs.readFile('sample.txt', 'utf8', function(err, data) {
+    console.log(data);
+});
+```
+
+<br>
+
+# 18강 13. App 제작- 파일을 이용해 본문 구현
