@@ -323,3 +323,53 @@ fs.readFile('sample.txt', 'utf8', function(err, data) {
 
 # 18강 13. App 제작- 파일을 이용해 본문 구현
 
+- main.js가 수정되면 껐다 켜야 되고 파일로 분할해서 파일을 수정하면 껐다 킬 필요 없다.
+
+- [https://github.com/jh2song/WEB2-Nodejs/tree/main/data](https://github.com/jh2song/WEB2-Nodejs/tree/main/data)
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var title = queryData.id
+    console.log(queryData.id); // HTML
+    if (_url == '/') {
+        title = 'Welcome';
+    }
+    if (_url == '/favicon.ico') {
+        return response.writeHead(404);
+    }
+    response.writeHead(200);
+    fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+        var template = `
+            <!doctype html>
+            <html>
+                <head>
+                    <title>WEB1 - ${title}</title>
+                    <meta charset="utf-8">
+                </head>
+                <body>
+                    <h1><a href="/">WEB</a></h1>
+                    <ol>
+                        <li><a href="/?id=HTML">HTML</a></li>
+                        <li><a href="/?id=CSS">CSS</a></li>
+                        <li><a href="/?id=JavaScript">JavaScript</a></li>
+                    </ol>
+                    <h2>${title}</h2>
+                    <p>${description}</p>
+                </body>
+            </html>
+    `;
+    response.end(template); 
+    });
+});
+app.listen(3000);
+```
+
+<br>
+
+# 19강 14. JavaScript-Boolean
