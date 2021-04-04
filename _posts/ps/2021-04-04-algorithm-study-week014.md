@@ -87,6 +87,8 @@ void Solve()
 ICPC의 수학 문제를 간접 체험해 보아서 좋았다.  
 앞으로 PS시 수기로 푸는걸 고려중... 수학문제에서 느꼈다.  
 
+<br>
+
 # B번 - [변형 계단 수](https://www.acmicpc.net/problem/18244){: target="\_blank"} (18244) 
 
 ## 문제 설명 
@@ -98,6 +100,8 @@ ICPC의 수학 문제를 간접 체험해 보아서 좋았다.
 ## 코드 
 
 ## 소감 
+
+<br>
 
 # C번 - [개미굴](https://www.acmicpc.net/problem/14725){: target="\_blank"} (18244) 
 
