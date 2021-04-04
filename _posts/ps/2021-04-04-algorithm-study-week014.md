@@ -93,13 +93,135 @@ ICPC의 수학 문제를 간접 체험해 보아서 좋았다.
 
 ## 문제 설명 
 
+n개의 길이의 숫자들 중  
 
+- 인접한 모든 자리수의 차이가 1이 난다.
+
+- 인접한 자릿수는 연속으로 3번 이상 증가하거나 감소할 수 없다.
+
+인 모든 개수를 구하는 문제이다. (큰 수 이므로 module 해준다.)
 
 ## 풀이 
 
+일반적인 점화식  
+
+```
+dp[n][m][k]:
+n길이 변형계단수에서
+m이 끝자리 수 일때
+k 상태
+
+k: 0 (연속 2번 증가)
+k: 1 (연속 1번 증가)
+k: 2 (연속 1번 감소)
+k: 3 (연속 2번 감소)
+
+dp[n][m][0] = dp[n-1][m-1][1]
+dp[n][m][3] = dp[n-1][m+1][2]
+dp[n][m][1] = dp[n-1][m-1][2] + dp[n-1][m-1][3]
+dp[n][m][2] = dp[n-1][m+1][0] + dp[n-1][m+1][1]
+```
+
+단 m이 0이거나 9일때는 특별한 처리를 해야 한다.
+
 ## 코드 
 
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+
+#define DIV 1000000007
+typedef long long ll;
+
+ll n;
+ll dp[101][10][4];
+
+void Init();
+void Input();
+void Solve();
+
+int main()
+{
+	Init();
+	Input();
+
+	if (n == 1)
+	{
+		cout << 10 << "\n";
+		return 0;
+	}
+
+	Solve();
+}
+
+void Init()
+{
+	for (ll i = 0; i <= 9; i++)
+	{
+		if (i != 0)
+			dp[2][i][1] = 1;
+		if (i != 9)
+			dp[2][i][2] = 1;
+	}
+}
+
+void Input()
+{
+	cin >> n;
+}
+
+void Solve()
+{
+	for (ll i = 3; i <= n; i++)
+	{
+		for (ll j = 0; j <= 9; j++)
+		{
+			/*
+			k: 0 (연속 2번 증가)
+			k: 1 (연속 1번 증가)
+			k: 2 (연속 1번 감소)
+			k: 3 (연속 2번 감소)
+			*/
+
+			// 끝자리가 0일때 이전 상태가 증가가 2번 될 수 없다.
+			if (j == 0)
+			{
+				dp[i][j][3] = dp[i - 1][j + 1][2] % DIV;
+				dp[i][j][2] = dp[i - 1][j + 1][1] % DIV;
+			}
+			// 끝자리가 9일때 이전 상태가 감소가 2번 될 수 없다.
+			else if (j == 9)
+			{
+				dp[i][j][0] = dp[i - 1][j - 1][1] % DIV;
+				dp[i][j][1] = dp[i - 1][j - 1][2] % DIV;
+			}
+			else if (j >= 1 && j <= 8)
+			{
+				dp[i][j][0] = dp[i - 1][j - 1][1] % DIV;
+				dp[i][j][1] = (dp[i - 1][j - 1][2] % DIV + dp[i - 1][j - 1][3] % DIV) % DIV;
+				dp[i][j][2] = (dp[i - 1][j + 1][0] % DIV + dp[i - 1][j + 1][1] % DIV) % DIV;
+				dp[i][j][3] = dp[i - 1][j + 1][2] % DIV;
+			}
+		}
+	}
+
+	ll ans = 0;
+	for (ll i = 0; i <= 9; i++)
+	{
+		for (ll j = 0; j <= 3; j++)
+		{
+			ans += dp[n][i][j] % DIV;
+			ans = ans % DIV;
+		}
+	}
+
+	cout << ans % DIV << '\n';
+}
+```
+
 ## 소감 
+
+문제를 깊이 이해하고 푸는 습관을 기르자.
 
 <br>
 
@@ -107,8 +229,89 @@ ICPC의 수학 문제를 간접 체험해 보아서 좋았다.
 
 ## 문제 설명 
 
+트라이 구조를 만든 뒤, 부모 노드부터 리프 노드까지의 깊이와 리프 노드를 출력하는 문제이다.
+
 ## 풀이 
+
+트라이 클래스를 만들자.  
+멤버 변수로는 map 자료구조로 또다시 트라이를 참조하는 구조이다.  
+
+```c++
+class Trie {
+public:
+	map<string, Trie*> child;
+	void Insert(Trie* _root, vector<string> v, int idx);
+};
+```
 
 ## 코드 
 
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+
+class Trie {
+public:
+	map<string, Trie*> child;
+	void Insert(Trie* _root, vector<string> v, int idx);
+};
+
+void Trie::Insert(Trie* _root, vector<string> v, int idx)
+{
+	if (idx == v.size()) return;
+
+	if (_root->child.count(v[idx]) == 0)
+		_root->child[v[idx]] = new Trie();
+
+	Insert(_root->child[v[idx]], v, idx + 1);
+}
+
+void Input();
+void Solve();
+
+int t;
+int n;
+Trie* root = new Trie();
+
+void DFS(Trie* _root, int dep = 0)
+{
+	for (auto e : _root->child)
+	{
+		for (int i = 0; i < dep; i++)
+			cout << "--";
+		cout << e.first << "\n";
+		DFS(e.second, dep + 1);
+	}
+}
+
+int main()
+{
+	Input();
+	Solve();
+	return 0;
+}
+
+void Input()
+{
+	cin >> t;
+
+	while (t--)
+	{
+		cin >> n;
+		vector<string> v(n);
+		for (int i = 0; i < n; i++)
+			cin >> v[i];
+
+		root->Insert(root, v, 0);
+	}
+}
+
+void Solve()
+{
+	DFS(root);
+}
+```
+
 ## 소감 
+
+참조를 하면 풀 수 있지만 실제 코테나 대회에선 참조를 할 수 없진 않는가? 시간이 나면 틈틈히 문제 복기를 해야겠다.
