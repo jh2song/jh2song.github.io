@@ -374,3 +374,50 @@ app.listen(3000);
 <br>
 
 # 19강 14. JavaScript-Boolean
+
+```javascript
+console.log(true); // true 출력
+console.log(false); // false 출력
+```
+
+<br>
+
+# 20강 15. JavaScript-비교연산자
+
+```javascript
+console.log(1==1); // true
+console.log(1==2); // false
+console.log(1>2); // false
+console.log(1<2); // true
+
+// 정말 같은가?
+console.log(1===1); // true
+console.log(1===2); // false
+```
+
+<br>
+
+# 21강 16. JavaScript-제어문
+
+효율적인 코드를 위해(ex. 중복 제거) 제어문(조건문, 반복문)을 사용하자.
+
+<br>
+
+# 22강 17. JavaScript-조건문
+
+```javascript
+console.log('A');
+console.log('B');
+if (true) {
+    console.log('C1');
+} else {
+    console.log('C2');
+}
+console.group('D');
+```
+
+<br>
+
+# 23강 18. NodeJS-콘솔에서의 입력값
+
+<br>
