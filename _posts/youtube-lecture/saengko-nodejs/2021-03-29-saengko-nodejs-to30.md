@@ -522,3 +522,86 @@ app.listen(3000);
 ```
 
 <br>
+
+# 25강 19.2. App 제작-홈페이지 구현
+
+- 기존 웹은 홈이 구현이 안되어있다. 각각의 페이지로 들어갔을땐 잘 동작한다.
+
+![image](https://user-images.githubusercontent.com/43688074/113950528-89193880-984c-11eb-8d7b-3f5be788fb42.png)
+
+![image](https://user-images.githubusercontent.com/43688074/113950590-b1089c00-984c-11eb-8c1f-a7680a790f94.png)
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/') {
+        if (queryData.id === undefined) { // 홈일 때
+            fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var template = `
+                    <!doctype html>
+                    <html>
+                        <head>
+                            <title>WEB1 - ${title}</title>
+                            <meta charset="utf-8">
+                        </head>
+                        <body>
+                            <h1><a href="/">WEB</a></h1>
+                            <ol>
+                                <li><a href="/?id=HTML">HTML</a></li>
+                                <li><a href="/?id=CSS">CSS</a></li>
+                                <li><a href="/?id=JavaScript">JavaScript</a></li>
+                            </ol>
+                            <h2>${title}</h2>
+                            <p>${description}</p>
+                        </body>
+                    </html>
+                `;
+                response.writeHead(200);
+                response.end(template); 
+            });
+        } else {
+            fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                var title = queryData.id
+                var template = `
+                    <!doctype html>
+                    <html>
+                        <head>
+                            <title>WEB1 - ${title}</title>
+                            <meta charset="utf-8">
+                        </head>
+                        <body>
+                            <h1><a href="/">WEB</a></h1>
+                            <ol>
+                                <li><a href="/?id=HTML">HTML</a></li>
+                                <li><a href="/?id=CSS">CSS</a></li>
+                                <li><a href="/?id=JavaScript">JavaScript</a></li>
+                            </ol>
+                            <h2>${title}</h2>
+                            <p>${description}</p>
+                        </body>
+                    </html>
+                `;
+                response.writeHead(200);
+                response.end(template); 
+            });
+        }
+    } else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+});
+app.listen(3000);
+```
+
+<br>
+
+# 26강 20. JavaScript-반복문
