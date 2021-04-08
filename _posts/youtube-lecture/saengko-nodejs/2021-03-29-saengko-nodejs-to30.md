@@ -605,3 +605,155 @@ app.listen(3000);
 <br>
 
 # 26강 20. JavaScript-반복문
+
+```javascript
+console.log('A');
+console.log('B');
+
+var i = 0;
+while(i < 2) {
+    console.log('C1');
+    console.log('C2');
+    i = i + 1;
+}
+
+console.log('D');
+```
+
+<br>
+
+# 27강 21. JavaScript-배열
+
+```javascript
+var arr = ['A', 'B', 'C', 'D'];
+console.log(arr[1]); // B
+console.log(arr[3]); // D
+arr[2] = 3;
+console.log(arr); // A, B, 3, D
+console.log(arr.length); // 4
+arr.push('E');
+console.log(arr); // A, B, 3, D, E
+```
+
+<br>
+
+# 28강 22. JavaScript-배열과 반복문
+
+```javascript
+var number = [1, 400, 12, 34];
+//하나씩 출력
+//var i = 0;
+//while(i < number.length) {
+//  console.log(number[i]);
+//  i = i + 1;
+//}
+
+// 합 구하기
+var i = 0;
+var total = 0;
+while(i < number.length) {
+    total = total + number[i];
+    i = i + 1;
+}
+console.log(`total : ${total}`); // total : 447
+```
+
+<br>
+
+# 29강 23. Node.js에서 파일목록 알아내기
+
+```javascript
+var testFolder = './data'
+var fs = require('fs');
+
+fs.readdir(testFolder, function(error, filelist) {
+    console.log(filelist);
+});
+// 출력: [ 'CSS', 'HTML', 'JavaScript', 'main.js' ]
+```
+
+<br>
+
+# 30강 24. App 제작-글목록 출력하기
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/') {
+        if (queryData.id === undefined) { // 홈일 때  
+            fs.readdir('./data', function(error, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = '<ul>'; 
+                var i = 0;
+                while(i < filelist.length) {
+                    list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
+                    i = i + 1;
+                }
+                list = list + '</ul>';
+                var template = `
+                    <!doctype html>
+                    <html>
+                        <head>
+                            <title>WEB1 - ${title}</title>
+                            <meta charset="utf-8">
+                        </head>
+                        <body>
+                            <h1><a href="/">WEB</a></h1>
+                            ${list}
+                            <h2>${title}</h2>
+                            <p>${description}</p>
+                        </body>
+                    </html>
+                `;
+            response.writeHead(200);
+            response.end(template); 
+            });
+        } else {
+            fs.readdir('./data', function(error, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = '<ul>'; 
+                var i = 0;
+                while(i < filelist.length) {
+                    list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
+                    i = i + 1;
+                }
+                list = list + '</ul>';
+                fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                    var title = queryData.id
+                    var template = `
+                        <!doctype html>
+                        <html>
+                            <head>
+                                <title>WEB1 - ${title}</title>
+                                <meta charset="utf-8">
+                            </head>
+                            <body>
+                                <h1><a href="/">WEB</a></h1>
+                                ${list}
+                                <h2>${title}</h2>
+                                <p>${description}</p>
+                            </body>
+                        </html>
+                    `;
+                    response.writeHead(200);
+                    response.end(template); 
+                });
+            });
+        }
+    } else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+});
+app.listen(3000);
+```
+<br>
