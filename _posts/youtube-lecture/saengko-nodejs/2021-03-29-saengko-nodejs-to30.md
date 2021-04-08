@@ -420,4 +420,105 @@ console.group('D');
 
 # 23강 18. NodeJS-콘솔에서의 입력값
 
+```javascript
+var args = process.argv;
+console.log(args);
+/*
+출력
+[ 'C:\\Program Files\\nodejs\\node.exe',
+  'C:\\Users\\spec0\\Desktop\\Project\\2021\\03\\nodejs\\syntax\\conditional.js' ]
+*/
+
+console.log('A');
+console.log('B');
+if (args[2] === '1') { // idx 2부터 파라미터가 들어온다
+    console.log('C1');
+} else {
+    console.log('C2');
+}
+console.group('D');
+```
+
+<br>
+
+# 24강 19.1. App 제작-Not found 구현
+
+- url에 루트가 아닌 경로는 Not found를 출력시킴
+- HTML, CSS, ... 등등의 파일은 쿼리스트링으로 구현해서 잘 동작함
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    var title = queryData.id
+    
+    if (pathname === '/') {
+        fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+            var template = `
+                <!doctype html>
+                <html>
+                    <head>
+                        <title>WEB1 - ${title}</title>
+                        <meta charset="utf-8">
+                    </head>
+                    <body>
+                        <h1><a href="/">WEB</a></h1>
+                        <ol>
+                            <li><a href="/?id=HTML">HTML</a></li>
+                            <li><a href="/?id=CSS">CSS</a></li>
+                            <li><a href="/?id=JavaScript">JavaScript</a></li>
+                        </ol>
+                        <h2>${title}</h2>
+                        <p>${description}</p>
+                    </body>
+                </html>
+            `;
+            response.writeHead(200);
+            response.end(template); 
+        });
+    } else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+
+    console.log(url.parse(_url, true));
+    /*
+    출력
+    Url {
+        protocol: null,
+        slashes: null,
+        auth: null,
+        host: null,
+        port: null,
+        hostname: null,
+        hash: null,
+        search: '',
+        query: {},
+        pathname: '/',
+        path: '/',
+        href: '/' }
+    Url {
+        protocol: null,
+        slashes: null,
+        auth: null,
+        host: null,
+        port: null,
+        hostname: null,
+        hash: null,
+        search: '',
+        query: {},
+        pathname: '/favicon.ico',
+        path: '/favicon.ico',
+        href: '/favicon.ico' }
+    */
+
+});
+app.listen(3000);
+```
+
 <br>
