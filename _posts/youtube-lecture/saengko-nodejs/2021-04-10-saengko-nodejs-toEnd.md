@@ -43,3 +43,6 @@ sum(2, 4); // 6 // argument
 
 <br>
 
+# 33강 25.3. JavaScript-함수의 출력
+
+<br>
