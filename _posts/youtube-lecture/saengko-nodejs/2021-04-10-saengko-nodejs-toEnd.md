@@ -141,3 +141,37 @@ app.listen(3000);
 - Nodejs는 비동기적 처리를 하기 위한 좋은 기능을 가지고 있다.
 
 <br>
+
+# 37강 28.2. Nodejs에서 동기와 비동기 2
+
+```javascript
+var fs = require('fs');
+
+/*
+// readFileSync
+console.log('A');
+var result = fs.readFileSync('syntax/sample.txt', 'utf8'); // 동기, 리턴한다
+console.log(result);
+console.log('C');
+
+출력:
+A
+B
+C
+*/
+
+console.log('A');
+fs.readFile('syntax/sample.txt', 'utf8', function(err, result) {
+    console.log(result);
+}); // 비동기, readFile은 리턴하지 않는다.
+console.log('C');
+
+// 출력
+// A
+// C
+// B
+```
+
+<br>
+
+# 38강 28.3. JavaScript-callback
