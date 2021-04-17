@@ -254,3 +254,20 @@ PS C:\Users\spec0\Desktop\Project\2021\03\nodejs> pm2 start main.js
 
 # 40강 30. HTML-form
 
+```html
+<form action="http://localhost:3000/process_create" method="post">
+    <p><input type="text" name="title"></p>
+    <p>
+        <textarea name="description"></textarea>
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+```
+
+![image](https://user-images.githubusercontent.com/43688074/115126270-bb732480-a008-11eb-815e-c34f8332db77.png)
+
+![image](https://user-images.githubusercontent.com/43688074/115126284-e198c480-a008-11eb-9b7a-1cdb46a85aa9.png)
+
+> 서버에 데이터를 수정, 삭제, 생성 같은걸 할 때는 method를 post로 해야 한다 !!! (보안 상에 이유, 데이터를 get으로 보내면 짤릴 수 있다. 너무 큰 데이터일 때)
