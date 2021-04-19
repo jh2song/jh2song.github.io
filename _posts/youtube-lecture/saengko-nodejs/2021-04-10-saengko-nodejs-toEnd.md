@@ -271,3 +271,105 @@ PS C:\Users\spec0\Desktop\Project\2021\03\nodejs> pm2 start main.js
 ![image](https://user-images.githubusercontent.com/43688074/115126284-e198c480-a008-11eb-9b7a-1cdb46a85aa9.png)
 
 > 서버에 데이터를 수정, 삭제, 생성 같은걸 할 때는 method를 post로 해야 한다 !!! (보안 상에 이유, 데이터를 get으로 보내면 짤릴 수 있다. 너무 큰 데이터일 때)
+
+<br>
+
+# 41강 31. App 제작-글생성 UI 만들기
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+
+function templateHTML(title, list, body) {
+    return `
+    <!doctype html>
+    <html>
+        <head>
+            <title>WEB1 - ${title}</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1><a href="/">WEB</a></h1>
+            ${list}
+            <a href="/create">create</a>
+            ${body}
+        </body>
+    </html>
+    `;
+}
+function templateList(filelist) {
+    var list = '<ul>'; 
+    var i = 0;
+    while(i < filelist.length) {
+        list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
+        i = i + 1;
+    }
+    list = list + '</ul>';
+    return list;
+}
+
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/') {
+        if (queryData.id === undefined) { // 홈일 때  
+            fs.readdir('./data', function(error, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, `<h2>${title}</h2>${description}`);
+                response.writeHead(200);
+                response.end(template); 
+            });
+        } else {
+            fs.readdir('./data', function(error, filelist) {
+                fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                    var title = queryData.id;
+                    var list = templateList(filelist);
+                    var template = templateHTML(title, list, `<h2>${title}</h2>${description}`);
+                    response.writeHead(200);
+                    response.end(template); 
+                });
+            });
+        }
+    } else if (pathname === '/create') {
+        fs.readdir('./data', function(error, filelist) {
+            var title = 'WEB - create';
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `
+            <form action="http://localhost:3000/process_create" method="post">
+            <p><input type="text" name="title" placeholder="title"></p>
+            <p>
+                <textarea name="description" placeholder="description"></textarea>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+            </form>
+            `);
+            response.writeHead(200);
+            response.end(template); 
+        });
+    } else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+});
+app.listen(3000);
+```
+
+- 결과
+
+![image](https://user-images.githubusercontent.com/43688074/115313439-3aee2880-a1ae-11eb-85a4-1eddbfcabb75.png)
+
+![image](https://user-images.githubusercontent.com/43688074/115313445-3de91900-a1ae-11eb-97bc-bbf02ba27b99.png)
+
+<br>
+
+# 42강 32. App 제작-POST 방식으로 전송된 데이터 받기
+
+<br>
