@@ -482,4 +482,236 @@ app.listen(3000);
 
 # 43강 33. App 제작-파일생성과 리다이렉션
 
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var qs = require('querystring');
+
+function templateHTML(title, list, body) {
+    return `
+    <!doctype html>
+    <html>
+        <head>
+            <title>WEB1 - ${title}</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1><a href="/">WEB</a></h1>
+            ${list}
+            <a href="/create">create</a>
+            ${body}
+        </body>
+    </html>
+    `;
+}
+function templateList(filelist) {
+    var list = '<ul>'; 
+    var i = 0;
+    while(i < filelist.length) {
+        list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
+        i = i + 1;
+    }
+    list = list + '</ul>';
+    return list;
+}
+
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/') {
+        if (queryData.id === undefined) { // 홈일 때  
+            fs.readdir('./data', function(error, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, `<h2>${title}</h2>${description}`);
+                response.writeHead(200);
+                response.end(template); 
+            });
+        } else {
+            fs.readdir('./data', function(error, filelist) {
+                fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                    var title = queryData.id;
+                    var list = templateList(filelist);
+                    var template = templateHTML(title, list, `<h2>${title}</h2>${description}`);
+                    response.writeHead(200);
+                    response.end(template); 
+                });
+            });
+        }
+    } else if (pathname === '/create') {
+        fs.readdir('./data', function(error, filelist) {
+            var title = 'WEB - create';
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `
+            <form action="http://localhost:3000/create_process" method="post">
+            <p><input type="text" name="title" placeholder="title"></p>
+            <p>
+                <textarea name="description" placeholder="description"></textarea>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+            </form>
+            `);
+            response.writeHead(200);
+            response.end(template); 
+        });
+    } else if (pathname === '/create_process') { // post로 값 받기
+        var body = '';
+        request.on('data', function(data) {
+            body = body + data;
+        });
+        request.on('end', function() {
+            var post = qs.parse(body);
+            var title = post.title;
+            var description = post.description;
+            fs.writeFile(`data/${title}`, description, 'utf8', function(err) {
+                response.writeHead(302, {Location: `/?id=${title}`});
+                response.end(); 
+            });
+        });
+    } else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+});
+app.listen(3000);
+```
+
+- 결과
+
+![image](https://user-images.githubusercontent.com/43688074/115941370-119c0800-a4e0-11eb-95bd-c5e083a0c552.png)
+
+![image](https://user-images.githubusercontent.com/43688074/115941385-1f518d80-a4e0-11eb-82ec-82246184a0bc.png)
+
+<br>
+
+# 44강 34. App 제작-글수정-수정링크생성
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var qs = require('querystring');
+
+function templateHTML(title, list, body, control) {
+    return `
+    <!doctype html>
+    <html>
+        <head>
+            <title>WEB1 - ${title}</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1><a href="/">WEB</a></h1>
+            ${list}
+            ${control}
+            ${body}
+        </body>
+    </html>
+    `;
+}
+function templateList(filelist) {
+    var list = '<ul>'; 
+    var i = 0;
+    while(i < filelist.length) {
+        list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
+        i = i + 1;
+    }
+    list = list + '</ul>';
+    return list;
+}
+
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/') {
+        if (queryData.id === undefined) { // 홈일 때  
+            fs.readdir('./data', function(error, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, `<h2>${title}</h2>${description}`,
+                `<a href="/create">create</a>`
+                );
+                response.writeHead(200);
+                response.end(template); 
+            });
+        } else {
+            fs.readdir('./data', function(error, filelist) {
+                fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                    var title = queryData.id;
+                    var list = templateList(filelist);
+                    var template = templateHTML(title, list, `<h2>${title}</h2>${description}`,
+                    `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
+                    );
+                    response.writeHead(200);
+                    response.end(template); 
+                });
+            });
+        }
+    } else if (pathname === '/create') {
+        fs.readdir('./data', function(error, filelist) {
+            var title = 'WEB - create';
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `
+            <form action="http://localhost:3000/create_process" method="post">
+            <p><input type="text" name="title" placeholder="title"></p>
+            <p>
+                <textarea name="description" placeholder="description"></textarea>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+            </form>
+            `, '');
+            response.writeHead(200);
+            response.end(template); 
+        });
+    } else if (pathname === '/create_process') { // post로 값 받기
+        var body = '';
+        request.on('data', function(data) {
+            body = body + data;
+        });
+        request.on('end', function() {
+            var post = qs.parse(body);
+            var title = post.title;
+            var description = post.description;
+            fs.writeFile(`data/${title}`, description, 'utf8', function(err) {
+                response.writeHead(302, {Location: `/?id=${title}`});
+                response.end(); 
+            });
+        });
+    } else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+});
+app.listen(3000);
+```
+
+- 홈 디렉토리에는 update 버튼이 없다.
+
+![image](https://user-images.githubusercontent.com/43688074/115941755-c2ef6d80-a4e1-11eb-9b6e-82de17a101a2.png)
+
+- 각 파일로 들어갈 시 update 버튼(링크)이 생긴다.
+
+![image](https://user-images.githubusercontent.com/43688074/115941791-e3b7c300-a4e1-11eb-835d-da7e6d86b5bc.png)
+
+- 버튼 클릭시 링크 확인하기
+
+![image](https://user-images.githubusercontent.com/43688074/115941798-f0d4b200-a4e1-11eb-9551-1f2cb8a8a183.png)
+
+<br>
+
+# 45강 35. App 제작-글수정-수정할 정보 전송
+
 <br>
