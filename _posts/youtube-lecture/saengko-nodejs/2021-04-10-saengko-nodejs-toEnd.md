@@ -1007,4 +1007,339 @@ app.listen(3000);
 
 # 47강 37. App 제작-글삭제-삭제버튼 구현
 
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var qs = require('querystring');
+
+function templateHTML(title, list, body, control) {
+    return `
+    <!doctype html>
+    <html>
+        <head>
+            <title>WEB1 - ${title}</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1><a href="/">WEB</a></h1>
+            ${list}
+            ${control}
+            ${body}
+        </body>
+    </html>
+    `;
+}
+function templateList(filelist) {
+    var list = '<ul>'; 
+    var i = 0;
+    while(i < filelist.length) {
+        list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
+        i = i + 1;
+    }
+    list = list + '</ul>';
+    return list;
+}
+
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/') {
+        if (queryData.id === undefined) { // 홈일 때  
+            fs.readdir('./data', function(error, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, `<h2>${title}</h2>${description}`,
+                `<a href="/create">create</a>`
+                );
+                response.writeHead(200);
+                response.end(template); 
+            });
+        } else {
+            fs.readdir('./data', function(error, filelist) {
+                fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                    var title = queryData.id;
+                    var list = templateList(filelist);
+                    var template = templateHTML(title, list, `<h2>${title}</h2>${description}`,
+                    `<a href="/create">create</a>
+                    <a href="/update?id=${title}">update</a>
+                    <form action="delete_process" method="post">
+                        <input type="hidden" name="id" value="${title}">
+                        <input type="submit" value="delete">
+                    </form>`
+                    );
+                    response.writeHead(200);
+                    response.end(template); 
+                });
+            });
+        }
+    } else if (pathname === '/create') {
+        fs.readdir('./data', function(error, filelist) {
+            var title = 'WEB - create';
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `
+            <form action="/create_process" method="post">
+            <p><input type="text" name="title" placeholder="title"></p>
+            <p>
+                <textarea name="description" placeholder="description"></textarea>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+            </form>
+            `, '');
+            response.writeHead(200);
+            response.end(template); 
+        });
+    } else if (pathname === '/create_process') { // post로 값 받기
+        var body = '';
+        request.on('data', function(data) {
+            body = body + data;
+        });
+        request.on('end', function() {
+            var post = qs.parse(body);
+            var title = post.title;
+            var description = post.description;
+            fs.writeFile(`data/${title}`, description, 'utf8', function(err) {
+                response.writeHead(302, {Location: `/?id=${title}`});
+                response.end(); 
+            });
+        });
+    } else if (pathname === '/update') {
+        fs.readdir('./data', function(error, filelist) {
+            fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                var title = queryData.id;
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, 
+                `
+                <form action="/update_process" method="post">
+                <input type="hidden" name="id" value="${title}">
+                <p><input type="text" name="title" placeholder="title" value="${title}"></p>
+                <p>
+                    <textarea name="description" placeholder="description">${description}</textarea>
+                </p>
+                <p>
+                    <input type="submit">
+                </p>
+                </form>
+                `,
+                `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
+                );
+                response.writeHead(200);
+                response.end(template); 
+            });
+        });
+    } else if (pathname === '/update_process') { 
+        var body = '';
+        request.on('data', function(data) {
+            body = body + data;
+        });
+        request.on('end', function() {
+            var post = qs.parse(body);
+            var id = post.id;
+            var title = post.title;
+            var description = post.description;
+            fs.rename(`data/${id}`, `data/${title}`, function(error) {
+                fs.writeFile(`data/${title}`, description, 'utf8', function(err) {
+                    response.writeHead(302, {Location: `/?id=${title}`});
+                    response.end(); 
+                });
+            });  
+        });
+    }else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+});
+app.listen(3000);
+```
+
+- 결과
+
+![image](https://user-images.githubusercontent.com/43688074/116161267-6c2aa380-a72e-11eb-82cc-08682bc60859.png)
+
+![image](https://user-images.githubusercontent.com/43688074/116161285-70ef5780-a72e-11eb-84a1-df5a0ed98dfe.png)
+
+<br>
+
+# 48강 38. App 제작-글삭제 기능 완성
+
+```javascript
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var qs = require('querystring');
+
+function templateHTML(title, list, body, control) {
+    return `
+    <!doctype html>
+    <html>
+        <head>
+            <title>WEB1 - ${title}</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1><a href="/">WEB</a></h1>
+            ${list}
+            ${control}
+            ${body}
+        </body>
+    </html>
+    `;
+}
+function templateList(filelist) {
+    var list = '<ul>'; 
+    var i = 0;
+    while(i < filelist.length) {
+        list = list + `<li><a href="/?id=${filelist[i]}">${filelist[i]}</a></li>`;
+        i = i + 1;
+    }
+    list = list + '</ul>';
+    return list;
+}
+
+
+var app = http.createServer(function(request, response) {
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    
+    if (pathname === '/') {
+        if (queryData.id === undefined) { // 홈일 때  
+            fs.readdir('./data', function(error, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, `<h2>${title}</h2>${description}`,
+                `<a href="/create">create</a>`
+                );
+                response.writeHead(200);
+                response.end(template); 
+            });
+        } else {
+            fs.readdir('./data', function(error, filelist) {
+                fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                    var title = queryData.id;
+                    var list = templateList(filelist);
+                    var template = templateHTML(title, list, `<h2>${title}</h2>${description}`,
+                    `<a href="/create">create</a>
+                    <a href="/update?id=${title}">update</a>
+                    <form action="delete_process" method="post">
+                        <input type="hidden" name="id" value="${title}">
+                        <input type="submit" value="delete">
+                    </form>`
+                    );
+                    response.writeHead(200);
+                    response.end(template); 
+                });
+            });
+        }
+    } else if (pathname === '/create') {
+        fs.readdir('./data', function(error, filelist) {
+            var title = 'WEB - create';
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `
+            <form action="/create_process" method="post">
+            <p><input type="text" name="title" placeholder="title"></p>
+            <p>
+                <textarea name="description" placeholder="description"></textarea>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+            </form>
+            `, '');
+            response.writeHead(200);
+            response.end(template); 
+        });
+    } else if (pathname === '/create_process') { // post로 값 받기
+        var body = '';
+        request.on('data', function(data) {
+            body = body + data;
+        });
+        request.on('end', function() {
+            var post = qs.parse(body);
+            var title = post.title;
+            var description = post.description;
+            fs.writeFile(`data/${title}`, description, 'utf8', function(err) {
+                response.writeHead(302, {Location: `/?id=${title}`});
+                response.end(); 
+            });
+        });
+    } else if (pathname === '/update') {
+        fs.readdir('./data', function(error, filelist) {
+            fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description) {
+                var title = queryData.id;
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, 
+                `
+                <form action="/update_process" method="post">
+                <input type="hidden" name="id" value="${title}">
+                <p><input type="text" name="title" placeholder="title" value="${title}"></p>
+                <p>
+                    <textarea name="description" placeholder="description">${description}</textarea>
+                </p>
+                <p>
+                    <input type="submit">
+                </p>
+                </form>
+                `,
+                `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
+                );
+                response.writeHead(200);
+                response.end(template); 
+            });
+        });
+    } else if (pathname === '/update_process') { 
+        var body = '';
+        request.on('data', function(data) {
+            body = body + data;
+        });
+        request.on('end', function() {
+            var post = qs.parse(body);
+            var id = post.id;
+            var title = post.title;
+            var description = post.description;
+            fs.rename(`data/${id}`, `data/${title}`, function(error) {
+                fs.writeFile(`data/${title}`, description, 'utf8', function(err) {
+                    response.writeHead(302, {Location: `/?id=${title}`});
+                    response.end(); 
+                });
+            });  
+        });
+    } else if (pathname === '/delete_process') { 
+        var body = '';
+        request.on('data', function(data) {
+            body = body + data;
+        });
+        request.on('end', function() {
+            var post = qs.parse(body);
+            var id = post.id;
+            fs.unlink(`data/${id}`, function(error) {
+                response.writeHead(302, {Location: `/`});
+                response.end(); 
+            });
+        });
+    } else {
+        response.writeHead(404);
+        response.end('Not found'); 
+    }
+});
+app.listen(3000);
+```
+
+- 결과
+
+    - mongoDB 문서의 delete 버튼을 누른다.
+
+    ![image](https://user-images.githubusercontent.com/43688074/116161947-b7918180-a72f-11eb-9a02-23887c31674e.png)
+
+    - 삭제된다
+
+    ![image](https://user-images.githubusercontent.com/43688074/116161965-c2e4ad00-a72f-11eb-901f-f22d33e03a84.png)
+
 <br>
