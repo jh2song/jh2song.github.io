@@ -1343,3 +1343,125 @@ app.listen(3000);
     ![image](https://user-images.githubusercontent.com/43688074/116161965-c2e4ad00-a72f-11eb-901f-f22d33e03a84.png)
 
 <br>
+
+# 49강 39. JavaScript 객체의 형식
+
+```javascript
+// Array
+var members = ['egoing', 'k8805', 'hoya'];
+console.log(members[1]); // k8805
+
+// Object
+var roles = {
+    'programmer':'egoing',
+    'designer':'k8805',
+    'manager':'hoya'
+}
+console.log(roles.designer); // k8805
+```
+
+<br>
+
+# 50강 40. JavaScript-객체-반복
+
+```javascript
+// Array
+var members = ['egoing', 'k8805', 'hoya'];
+console.log(members[1]); // k8805
+
+/*
+array loop egoing
+array loop k8805
+array loop hoya
+*/
+var i = 0;
+while(i < members.length) {
+    console.log('array loop', members[i]);
+    i = i + 1;
+}
+
+// Object
+var roles = {
+    'programmer':'egoing',
+    'designer':'k8805',
+    'manager':'hoya'
+}
+console.log(roles.designer); // k8805
+console.log(roles['designer']); // k8805
+
+/*
+object =>  programmer value =>  egoing
+object =>  designer value =>  k8805
+object =>  manager value =>  hoya
+*/
+for (var name in roles) {
+    console.log('object => ', name, 'value => ', roles[name]);
+}
+```
+
+<br>
+
+# 51강 41. JavaScript-객체-값으로서 함수
+
+- if나 while문 같은 경우는 statement를 값으로 할당할 수 없다.
+
+- 함수는 값으로 할당할 수 있다.
+
+```javascript
+var f = function () {
+    console.log(1+1);
+    console.log(1+2);
+}
+console.log(f); // [Function: f]
+
+/*
+2
+3
+*/
+f(); 
+
+/*
+2
+3
+*/
+var a = [f]; // 배열
+a[0]();
+
+/*
+2
+3
+*/
+var o = { // 객체
+    func:f
+}
+o.func();
+```
+
+<br>
+
+# 52강 42. JavaScript-객체-데이터와 처리 방법을 담는 그릇으로서 객체
+
+```javascript
+var o = {
+    v1:'v1',
+    v2:'v2',
+    f1:function () {
+        console.log(this.v1);
+    },
+    f2:function () {
+        console.log(this.v2);
+    }
+}
+
+/*
+출력
+v1
+v2
+*/
+o.f1();
+o.f2();
+```
+
+<br>
+
+# 53강 43. App제작-템플릿 기능 정리정돈하기
