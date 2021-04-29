@@ -1853,6 +1853,8 @@ app.listen(3000);
 
 `127.0.0.1:3000/?id=../password.js`치면 민감한 정보가 노출된다.
 
+해당 이슈를 막자!!!
+
 ```javascript
 var http = require('http');
 var fs = require('fs');
@@ -2002,7 +2004,18 @@ app.listen(3000);
 
 # 57강 47.1. App제작-출력정보에 대한 보안
 
+![image](https://user-images.githubusercontent.com/43688074/116631288-b9598000-a98f-11eb-8c87-48a18587729a.png)
 
+![image](https://user-images.githubusercontent.com/43688074/116631298-be1e3400-a98f-11eb-9ffe-ff1b942cd7d5.png)
+
+- 수동으로 꺽쇠를 바꿔주는 방법
+
+```
+// data/XSS
+&lt;script&gt;
+alert('merong');
+&lt;/script&gt;
+```
 
 <br>
 
