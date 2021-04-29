@@ -1640,4 +1640,37 @@ app.listen(3000);
 
 # 54강 44. Node.js 모듈의형식
 
+- mpart.js
+
+```javascript
+// mpart.js
+
+var M = {
+    v:'v',
+    f:function(){
+        console.log(this.v);
+    }
+}
+
+// M 객체를 바깥에서 이용하게 하겠다.
+module.exports = M;
+```
+
+- muse.js
+
+```javascript
+// muse.js
+
+var part = require('./mpart.js');
+console.log(part); // { v: 'v', f: [Function: f] }
+
+part.f(); // v
+```
+
+<br>
+
+# 55강 45. App 제작 - 모듈의 활용
+
+
+
 <br>
