@@ -2241,14 +2241,32 @@ app.listen(3000);
 
 # 60강 48. API와 CreateServer
 
+생략
+
 <br>
 
 # 61강 49. 수업을마치며
+
+생략
 
 <br>
 
 # 62강 Long take
 
+생략
+
 <br>
 
 # 63강 49. 부록 - pm2 보충학습
+
+- daemon: 백그라운드로 실행되는 프로그램
+
+- main.js를 pm2로 실행하는데 항상성을 유지하고 백그라운드로 실행하지 않는 명령어
+
+`pm2 start main.js --watch --no-daemon`
+
+- data, sessions 디렉토리에 대한 watch(항상성)을 하지 않도록 하는 명령어
+
+`pm2 start main.js --watch --ignore-watch="data/* sessions/*" --no-daemon`
+
+<br>
