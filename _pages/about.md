@@ -1,7 +1,7 @@
 ---
 permalink: /about/
 title: "송지훈 Jihoon Song"
-last_modified_at: 2021-02-27
+last_modified_at: "2021-05-05"
 toc: true
 toc_sticky: true
 ---
@@ -91,7 +91,7 @@ toc_sticky: true
 <summary>상세 이력 보기</summary>
 <div markdown="1">
 
-- 2020.12 ~
+- 2020.12 ~ 2021.05
 - 회장
 
 </div>
